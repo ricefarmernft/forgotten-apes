@@ -1,15 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import web3 from "web3";
-import "./App.css";
-import Navbar from "./Navbar";
-import Footers from "./Footers";
-import FindApes from "./findApes";
-import { Layout } from "antd";
 
-const { Content } = Layout;
-
-function App() {
+function FindApes() {
   const [apes, setApes] = useState([]);
   const [lostApes, setLostApes] = useState("");
 
@@ -51,15 +44,9 @@ function App() {
 
   return (
     <>
-      <Layout>
-        <Navbar lostApes={lostApes}/>
-        <Content>
-          <div>App</div>
-        </Content>
-        <Footers />
-      </Layout>
+      <div>{lostApes}</div>
     </>
   );
 }
 
-export default App;
+export default FindApes;
