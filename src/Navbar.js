@@ -1,5 +1,6 @@
 import React from "react";
 import { Layout, Menu, Row, Col, Statistic } from "antd";
+import { Link } from "react-router-dom";
 
 const { Header } = Layout;
 
@@ -9,11 +10,11 @@ const Navbar = (props) => {
   const items = [
     {
       key: 1,
-      label: "Forgotten Apes",
+      label: <Link to="/">Forgotten Apes</Link>,
     },
     {
       key: 2,
-      label: "Unclaimed $APE",
+      label: <Link to="/unclaimed$ape">Unclaimed $APE</Link>,
     },
     {
       key: 3,

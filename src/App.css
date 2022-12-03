@@ -28,6 +28,15 @@ html {
   color: white;
   font-size: 14px;
 } */
+
+/* Home */
+.home-stats {
+  padding-top: 20px;
+}
+.home-apes{
+  padding: 20px 20px 0 20px;
+}
+
 /* Footer */
 .footer-blank {
   width: 33%;
