@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { Layout, Row, Col, Statistic, Card, Pagination } from "antd";
+import { Layout, Row, Col, Input, Card, Typography } from "antd";
 import { useGetApecoinApeQuery } from "./services/apecoinAPI";
 import web3 from "web3";
 import getRandomApes from "./functions/getRandomApes";
 
 const { Content } = Layout;
+const {Title, Text} = Typography;
 
 const UnclaimedApe = (props) => {
   const [claimedApes, setClaimedApes] = useState();
   const [unclaimedApes, setUnclaimedApes] = useState();
+
+  const [searchTerm, setSearchTerm] = useState()
 
   const { data, isFetching } = useGetApecoinApeQuery();
 
@@ -42,6 +45,18 @@ const UnclaimedApe = (props) => {
 
   return (
     <Content>
+      <Title className="total-title" level={3}>
+        Total Apes: {unclaimedApes?.length}
+      </Title>
+      <Text className="title-text" level={3}>
+        Apes that never claimed their Apecoin airdrop.
+      </Text>
+      <div className="search-ape">
+        <Input
+          placeholder="Search Ape ID"
+          onChange={(e) => setSearchTerm(e.target.value)}
+        ></Input>
+      </div>
       <div className="home-apes">
         <Row
           gutter={[{ xs: 8, sm: 16, md: 24, lg: 24 }, 24]}
