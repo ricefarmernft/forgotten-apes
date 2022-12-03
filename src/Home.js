@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useLayoutEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Layout, Row, Col, Statistic, Card } from "antd";
 import { useGetApecoinApeQuery } from "./services/apecoinAPI";
 import web3 from "web3";
@@ -6,38 +6,38 @@ import getRandomApes from "./functions/getRandomApes";
 
 const { Content } = Layout;
 
-const Home = (props) => {
-  const {apes} = props;
-
+const Home = () => {
   const [claimedApes, setClaimedApes] = useState();
-  const [unclaimedApes , setUnclaimedApes] = useState();
+  const [unclaimedApes, setUnclaimedApes] = useState();
 
   const { data, isFetching } = useGetApecoinApeQuery();
 
-   // Set Lost Apes
-   const lostApes = 10000 - data?.result?.length;
+  // Set Lost Apes
+  const lostApes = 10000 - data?.result?.length;
 
+  //  Set Claimed Apes
   useEffect(() => {
-   setUnclaimedApes(getRandomApes(apes,24))
-   console.log(unclaimedApes)
-  },[apes])
-
-  useEffect(() => {
-    
     // Find ape ID's that claimed $APE
     const apeHex = data?.result?.map((entry) => entry.topics[1]);
     const apeNumbers = apeHex?.map((hex) => web3.utils.hexToNumber(hex));
     setClaimedApes(apeNumbers);
+  }, [data]);
 
+  useEffect(() => {
     const array = [];
-     for (let i = 0; i < 10000; i++) {
-       array[i] = i;
-     }
-       const apeDifferences = array.filter((apes) => !apeNumbers?.includes(apes));
-      //  setUnclaimedApes(getRandomApes(apeDifferences))
-  },[data]);
+    for (let i = 0; i < 10000; i++) {
+      array[i] = i;
+    }
 
-  const homeApes = getRandomApes(apes, 24);
+    if (claimedApes) {
+      const apeDifferences = array.filter(
+        (apes) => !claimedApes?.includes(apes)
+      );
+      setUnclaimedApes(getRandomApes(apeDifferences));
+    }
+  }, [claimedApes]);
+
+  console.log(unclaimedApes);
 
   if (isFetching) return "Loading...";
 
@@ -90,7 +90,6 @@ const Home = (props) => {
           justify="space-around"
           align="middle"
         >
-          {/* unclaimedApes.length === 10000 ? <div>Loading...</div> : unclaimedApes*/}
           {unclaimedApes?.map((ape) => (
             <Col key={ape} xs={12} sm={10} md={8} lg={6} xl={4}>
               <Card
