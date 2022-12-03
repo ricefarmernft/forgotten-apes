@@ -1,19 +1,45 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useRef, useLayoutEffect } from "react";
 import { Layout, Row, Col, Statistic, Card } from "antd";
+import { useGetApecoinApeQuery } from "./services/apecoinAPI";
+import web3 from "web3";
+import getRandomApes from "./functions/getRandomApes";
 
 const { Content } = Layout;
 
 const Home = (props) => {
-  const { lostApes, apes, loading } = props;
+  const {apes} = props;
 
-  const getRandomApes = (array) => {
-    const randomApes = [...array];
+  const [claimedApes, setClaimedApes] = useState();
+  const [unclaimedApes , setUnclaimedApes] = useState();
 
-    randomApes.sort(() => Math.random() - 0.5);
-    return randomApes.slice(0, 24);
-  };
+  const { data, isFetching } = useGetApecoinApeQuery();
 
-  const homeApes = getRandomApes(apes);
+   // Set Lost Apes
+   const lostApes = 10000 - data?.result?.length;
+
+  useEffect(() => {
+   setUnclaimedApes(getRandomApes(apes,24))
+   console.log(unclaimedApes)
+  },[apes])
+
+  useEffect(() => {
+    
+    // Find ape ID's that claimed $APE
+    const apeHex = data?.result?.map((entry) => entry.topics[1]);
+    const apeNumbers = apeHex?.map((hex) => web3.utils.hexToNumber(hex));
+    setClaimedApes(apeNumbers);
+
+    const array = [];
+     for (let i = 0; i < 10000; i++) {
+       array[i] = i;
+     }
+       const apeDifferences = array.filter((apes) => !apeNumbers?.includes(apes));
+      //  setUnclaimedApes(getRandomApes(apeDifferences))
+  },[data]);
+
+  const homeApes = getRandomApes(apes, 24);
+
+  if (isFetching) return "Loading...";
 
   return (
     <Content>
@@ -64,11 +90,12 @@ const Home = (props) => {
           justify="space-around"
           align="middle"
         >
-          {homeApes.map((ape) => (
+          {/* unclaimedApes.length === 10000 ? <div>Loading...</div> : unclaimedApes*/}
+          {unclaimedApes?.map((ape) => (
             <Col key={ape} xs={12} sm={10} md={8} lg={6} xl={4}>
               <Card
                 hoverable
-                loading={loading}
+                loading={isFetching}
                 cover={
                   <a
                     href={`https://opensea.io/assets/ethereum/0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d/${ape}`}
@@ -85,7 +112,7 @@ const Home = (props) => {
                 <Card.Meta
                   style={{ textAlign: "center" }}
                   title={ape}
-                //   loading={loading}
+                  //   loading={loading}
                 />
               </Card>
             </Col>
