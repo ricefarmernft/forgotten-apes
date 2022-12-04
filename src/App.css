@@ -37,7 +37,13 @@ html {
   padding: 20px 20px 0 20px;
 }
 /* Main */
-
+.title-container{
+  padding: 20px;
+}
+.search-ape{
+  padding-top: 20px;
+  width: 20%;
+}
 /* Footer */
 .footer-blank {
   width: 33%;

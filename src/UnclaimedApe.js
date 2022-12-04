@@ -3,41 +3,42 @@ import { Layout, Row, Col, Input, Card, Typography } from "antd";
 import { useGetApecoinApeQuery } from "./services/apecoinAPI";
 import web3 from "web3";
 import getRandomApes from "./functions/getRandomApes";
+import useSetClaimed from "./functions/useSetClaimed";
+import useSetUnclaimed from "./functions/useSetUnclaimed";
 
 const { Content } = Layout;
-const {Title, Text} = Typography;
+const { Title, Text } = Typography;
 
-const UnclaimedApe = (props) => {
+const UnclaimedApe = () => {
   const [claimedApes, setClaimedApes] = useState();
   const [unclaimedApes, setUnclaimedApes] = useState();
 
-  const [searchTerm, setSearchTerm] = useState()
+  const [searchTerm, setSearchTerm] = useState();
 
   const { data, isFetching } = useGetApecoinApeQuery();
 
   //  Set Claimed Apes
-  useEffect(() => {
-    // Find ape ID's that claimed $APE
-    const apeHex = data?.result?.map((entry) => entry.topics[1]);
-    const apeNumbers = apeHex?.map((hex) => web3.utils.hexToNumber(hex));
-    setClaimedApes(apeNumbers);
-  }, [data]);
+  useSetClaimed(data, 1, setClaimedApes);
 
   // Set Unclaimed Apes
+  useSetUnclaimed(claimedApes, setUnclaimedApes);
+
+  // Filter apes by ID
   useEffect(() => {
-    // Create array 0-10,000
     const array = [];
     for (let i = 0; i < 10000; i++) {
       array[i] = i;
     }
-    // Filter array by unclaimed $APE
     if (claimedApes) {
       const apeDifferences = array.filter(
         (apes) => !claimedApes?.includes(apes)
       );
-      setUnclaimedApes(getRandomApes(apeDifferences));
+      const filteredApes = apeDifferences?.filter((ape) =>
+        String(ape).includes(searchTerm)
+      );
+      setUnclaimedApes(filteredApes);
     }
-  }, [claimedApes]);
+  }, [searchTerm]);
 
   console.log(unclaimedApes);
 
@@ -45,22 +46,24 @@ const UnclaimedApe = (props) => {
 
   return (
     <Content>
-      <Title className="total-title" level={3}>
-        Total Apes: {unclaimedApes?.length}
-      </Title>
-      <Text className="title-text" level={3}>
-        Apes that never claimed their Apecoin airdrop.
-      </Text>
-      <div className="search-ape">
-        <Input
-          placeholder="Search Ape ID"
-          onChange={(e) => setSearchTerm(e.target.value)}
-        ></Input>
+      <div className="title-container">
+        <Title className="total-title" level={3}>
+          Total Apes: {unclaimedApes?.length}
+        </Title>
+        <Text className="title-text" level={3}>
+          {unclaimedApes?.length} apes never claimed their Apecoin airdrop.
+        </Text>
+        <div className="search-ape">
+          <Input
+            placeholder="Search Ape ID"
+            onChange={(e) => setSearchTerm(e.target.value)}
+          ></Input>
+        </div>
       </div>
       <div className="home-apes">
         <Row
           gutter={[{ xs: 8, sm: 16, md: 24, lg: 24 }, 24]}
-          justify="space-around"
+          justify="start"
           align="middle"
         >
           {unclaimedApes?.map((ape) => (

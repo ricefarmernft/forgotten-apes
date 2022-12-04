@@ -33,7 +33,7 @@ const Home = () => {
       const apeDifferences = array.filter(
         (apes) => !claimedApes?.includes(apes)
       );
-      setUnclaimedApes(getRandomApes(apeDifferences));
+      setUnclaimedApes(getRandomApes(apeDifferences, 18));
     }
   }, [claimedApes]);
 

@@ -14,11 +14,11 @@ const Navbar = (props) => {
     },
     {
       key: 2,
-      label: <Link to="/unclaimed$ape">Unclaimed $APE</Link>,
+      label: <Link to="/unclaimed-ape">Unclaimed $APE</Link>,
     },
     {
       key: 3,
-      label: "Unclaimed Dog",
+      label: <Link to="/unclaimed-dog">Unclaimed Dog</Link>
     },
     {
       key: 4,

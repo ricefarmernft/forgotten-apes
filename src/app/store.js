@@ -1,10 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import {apecoinApi} from "../services/apecoinAPI";
+import { etherscanApi} from "../services/apecoinAPI";
 
 export default configureStore({
     reducer: {
-        [apecoinApi.reducerPath]: apecoinApi.reducer,
+        [etherscanApi.reducerPath]: etherscanApi.reducer,
     },
     middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().concat(apecoinApi.middleware),
+        getDefaultMiddleware().concat(etherscanApi.middleware),
 })
