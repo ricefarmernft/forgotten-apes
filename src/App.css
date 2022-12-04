@@ -33,9 +33,6 @@ html {
 .home-stats {
   padding-top: 20px;
 }
-.home-apes{
-  padding: 20px 20px 0 20px;
-}
 /* Main */
 .title-container{
   padding: 20px;
@@ -43,6 +40,9 @@ html {
 .search-ape{
   padding-top: 20px;
   width: 20%;
+}
+.main-apes{
+  padding: 20px 20px 0 20px;
 }
 /* Footer */
 .footer-blank {

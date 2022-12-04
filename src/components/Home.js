@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Layout, Row, Col, Statistic, Card } from "antd";
-import { useGetApecoinApeQuery } from "./services/apecoinAPI";
+import { useGetApecoinApeQuery } from "../services/apecoinAPI";
 import web3 from "web3";
-import getRandomApes from "./functions/getRandomApes";
+import getRandomApes from "../functions/getRandomApes";
 
 const { Content } = Layout;
 

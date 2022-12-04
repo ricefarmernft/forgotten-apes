@@ -9,7 +9,7 @@ export default function useSetUnclaimed(claimed, setUnclaim) {
     for (let i = 0; i < 10000; i++) {
       array[i] = i;
     }
-    // Filter array by unclaimed $APE
+    // Filter array by unclaimed apes
     if (claimed) {
       const apeDifferences = array.filter((apes) => !claimed?.includes(apes));
       //   Set unclaimed apes (random)
