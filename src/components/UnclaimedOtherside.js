@@ -5,6 +5,7 @@ import useSetClaimed from "../functions/useSetClaimed";
 import useIdFilter from "../functions/useIdFilter";
 import TitleMain from "./subcomponents/TitleMain";
 import ApesMain from "./subcomponents/ApesMain";
+import SortMain from "./subcomponents/SortMain";
 import getRandomApes from "../functions/getRandomApes";
 
 const { Content } = Layout;
@@ -40,6 +41,7 @@ const UnclaimedOtherside = () => {
       <TitleMain number={totalApes} setSearchTerm={setSearchTerm}>
         {totalApes} apes never claimed their Otherside land.
       </TitleMain>
+      <SortMain setUnclaimed={setUnclaimedOtherside} unclaimed={unclaimedOtherside} />
       <ApesMain unclaimed={unclaimedOtherside} />
     </Content>
   );

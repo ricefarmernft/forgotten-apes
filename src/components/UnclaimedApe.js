@@ -6,6 +6,7 @@ import useSetUnclaimed from "../functions/useSetUnclaimed";
 import useIdFilter from "../functions/useIdFilter";
 import TitleMain from "./subcomponents/TitleMain";
 import ApesMain from "./subcomponents/ApesMain";
+import SortMain from "./subcomponents/SortMain";
 
 const { Content } = Layout;
 
@@ -36,6 +37,7 @@ const UnclaimedApe = () => {
       <TitleMain number={totalApes} setSearchTerm={setSearchTerm}>
         {totalApes} apes never claimed their Apecoin airdrop.
       </TitleMain>
+      <SortMain setUnclaimed={setUnclaimedApes} unclaimed={unclaimedApes} />
       <ApesMain unclaimed={unclaimedApes}></ApesMain>
     </Content>
   );
