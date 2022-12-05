@@ -22,10 +22,14 @@ const Navbar = (props) => {
     },
     {
       key: 4,
-      label: "No Transfers",
+      label: <Link to="/unclaimed-otherside">Unclaimed Otherside</Link>
     },
     {
       key: 5,
+      label: "No Transfers",
+    },
+    {
+      key: 6,
       label: "Burned Apes",
     },
   ];

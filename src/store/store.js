@@ -6,5 +6,10 @@ export default configureStore({
         [etherscanApi.reducerPath]: etherscanApi.reducer,
     },
     middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().concat(etherscanApi.middleware),
+        getDefaultMiddleware({
+            immutableCheck: {
+                ignoredPaths: ['items.data']
+            },
+            serializableCheck: {ignoredPaths: ['some.nested.paths']}
+        }).concat(etherscanApi.middleware),
 })

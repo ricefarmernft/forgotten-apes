@@ -37,8 +37,6 @@ const Home = () => {
     }
   }, [claimedApes]);
 
-  console.log(unclaimedApes);
-
   if (isFetching) return "Loading...";
 
   return (
