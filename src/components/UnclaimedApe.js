@@ -19,9 +19,6 @@ const UnclaimedApe = () => {
 
   const { data, isFetching } = useGetApecoinApeQuery();
 
-const {data: alchemy, isFetchings} = useGetNftsQuery('0x000000000000000000000000000000000000dead')
-console.log(alchemy)
-
   // Total unclaimed apes
   const totalApes = 10000 - claimedApes?.length;
 

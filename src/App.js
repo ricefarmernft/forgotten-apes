@@ -6,6 +6,7 @@ import Home from "./components/Home";
 import UnclaimedApe from "./components/UnclaimedApe";
 import UnclaimedDog from "./components/UnclaimedDog";
 import UnclaimedOtherside from "./components/UnclaimedOtherside";
+import BurnedApes from "./components/BurnedApes";
 import Footers from "./components/Footers";
 import { Layout } from "antd";
 
@@ -33,6 +34,11 @@ function App() {
               exact
               path="/unclaimed-otherside"
               element={<UnclaimedOtherside />}
+            ></Route>
+            <Route
+              exact
+              path="/burned-apes"
+              element={<BurnedApes />}
             ></Route>
           </Routes>
         </Content>

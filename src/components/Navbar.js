@@ -30,7 +30,7 @@ const Navbar = (props) => {
     },
     {
       key: 6,
-      label: "Burned Apes",
+      label: <Link to="/burned-apes">Burned Apes</Link>,
     },
   ];
 
