@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Layout } from "antd";
-import { useGetApecoinApeQuery } from "../services/apecoinAPI";
+import { useGetApecoinApeQuery } from "../services/etherscanApi";
+import { useGetNftsQuery } from "../services/alchemyApi";
 import useSetClaimed from "../functions/useSetClaimed";
 import useSetUnclaimed from "../functions/useSetUnclaimed";
 import useIdFilter from "../functions/useIdFilter";
@@ -17,6 +18,9 @@ const UnclaimedApe = () => {
   const [searchTerm, setSearchTerm] = useState();
 
   const { data, isFetching } = useGetApecoinApeQuery();
+
+const {data: alchemy, isFetchings} = useGetNftsQuery('0x000000000000000000000000000000000000dead')
+console.log(alchemy)
 
   // Total unclaimed apes
   const totalApes = 10000 - claimedApes?.length;

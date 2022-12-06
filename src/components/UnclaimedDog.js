@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Layout } from "antd";
-import { useGetDogApeQuery } from "../services/apecoinAPI";
+import { useGetDogApeQuery } from "../services/etherscanApi";
 import useSetClaimed from "../functions/useSetClaimed";
 import useSetUnclaimed from "../functions/useSetUnclaimed";
 import useIdFilter from "../functions/useIdFilter";
@@ -37,7 +37,7 @@ const UnclaimedDog = () => {
       <TitleMain number={totalApes} setSearchTerm={setSearchTerm}>
         {totalApes} apes never claimed their Bored Ape Kennel Club dog.
       </TitleMain>
-      <SortMain setUnclaimed={setUnclaimedDogs} unclaimed={unclaimedDogs}/>
+      <SortMain setUnclaimed={setUnclaimedDogs} unclaimed={unclaimedDogs} />
       <ApesMain unclaimed={unclaimedDogs} />
     </Content>
   );

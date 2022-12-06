@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Layout } from "antd";
-import { useGetOthersideApeQuery } from "../services/apecoinAPI";
+import { useGetOthersideApeQuery } from "../services/etherscanApi";
 import useSetClaimed from "../functions/useSetClaimed";
 import useIdFilter from "../functions/useIdFilter";
 import TitleMain from "./subcomponents/TitleMain";
@@ -41,7 +41,10 @@ const UnclaimedOtherside = () => {
       <TitleMain number={totalApes} setSearchTerm={setSearchTerm}>
         {totalApes} apes never claimed their Otherside land.
       </TitleMain>
-      <SortMain setUnclaimed={setUnclaimedOtherside} unclaimed={unclaimedOtherside} />
+      <SortMain
+        setUnclaimed={setUnclaimedOtherside}
+        unclaimed={unclaimedOtherside}
+      />
       <ApesMain unclaimed={unclaimedOtherside} />
     </Content>
   );
