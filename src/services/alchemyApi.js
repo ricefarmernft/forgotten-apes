@@ -18,6 +18,12 @@ export const alchemyApi = createApi({
           `getNFTs?owner=${owner}&pageSize=100&contractAddresses[]=${baycAddress}&withMetadata=false`
         ),
     }),
+    getHolders: builder.query({
+      query: () =>
+        createRequest(
+          `getOwnersForCollection?contractAddress=${baycAddress}&withTokenBalances=true`
+        ),
+    }),
   }),
 });
 

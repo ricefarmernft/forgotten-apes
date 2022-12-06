@@ -26,11 +26,11 @@ const Navbar = (props) => {
     },
     {
       key: 5,
-      label: "No Transfers",
+      label: <Link to="/burned-apes">Burned Apes</Link>,
     },
     {
       key: 6,
-      label: <Link to="/burned-apes">Burned Apes</Link>,
+      label: <Link to="/no-transfers">No Transfers</Link>,
     },
   ];
 
