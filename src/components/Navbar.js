@@ -9,8 +9,12 @@ const Navbar = (props) => {
 
   const items = [
     {
+      key: 0,
+      label: <Link to="/">Home</Link>,
+    },
+    {
       key: 1,
-      label: <Link to="/">Forgotten Apes</Link>,
+      label: <Link to="/forgotten-apes">Forgotten Apes</Link>,
     },
     {
       key: 2,
@@ -31,6 +35,10 @@ const Navbar = (props) => {
     {
       key: 6,
       label: <Link to="/no-transfers">No Transfers</Link>,
+    },
+    {
+      key: 7,
+      label: <Link to="/inactive-wallets">Inactive Wallets</Link>,
     },
   ];
 
