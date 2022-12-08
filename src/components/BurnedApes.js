@@ -5,16 +5,15 @@ import useIdFilter from "../functions/useIdFilter";
 import TitleMain from "./subcomponents/TitleMain";
 import ApesMain from "./subcomponents/ApesMain";
 import SortMain from "./subcomponents/SortMain";
-import Web3 from "web3";
+import { createAlchemyWeb3 } from "@alch/alchemy-web3";
 
-const web3 = new Web3('https://eth-mainnet.g.alchemy.com/v2/weAIDXHKw7995TqqNVUtFtLATPvXpYhz');
-
-
+const web3 = new createAlchemyWeb3(
+  "https://eth-mainnet.g.alchemy.com/v2/weAIDXHKw7995TqqNVUtFtLATPvXpYhz"
+);
 
 const { Content } = Layout;
 
 const BurnedApes = () => {
-    
   const [burnedApes, setBurnedApes] = useState();
   const [filteredApes, setFilteredApes] = useState();
   const [searchTerm, setSearchTerm] = useState();

@@ -27,4 +27,4 @@ export const alchemyApi = createApi({
   }),
 });
 
-export const { useGetNftsQuery } = alchemyApi;
+export const { useGetNftsQuery, useGetHoldersQuery } = alchemyApi;
