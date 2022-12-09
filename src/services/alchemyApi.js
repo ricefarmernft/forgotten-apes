@@ -18,13 +18,25 @@ export const alchemyApi = createApi({
           `getNFTs?owner=${owner}&pageSize=100&contractAddresses[]=${baycAddress}&withMetadata=false`
         ),
     }),
-    getHolders: builder.query({
+    getCurrentHolders: builder.query({
       query: () =>
         createRequest(
           `getOwnersForCollection?contractAddress=${baycAddress}&withTokenBalances=true`
         ),
     }),
+    getPastHolders: builder.query({
+      query: (block) =>
+        createRequest(
+          `getOwnersForCollection?contractAddress=${baycAddress}&withTokenBalances=true&block=${block}`
+        ),
+    }),
+    getTokenHolders: builder.query({
+      query: (token) =>
+        createRequest(
+          `getOwnersForToken?contractAddress=${baycAddress}&tokenId=${token}`
+        ),
+    }),
   }),
 });
 
-export const { useGetNftsQuery, useGetHoldersQuery } = alchemyApi;
+export const { useGetNftsQuery, useGetCurrentHoldersQuery, useGetPastHoldersQuery, useGetTokenHoldersQuery } = alchemyApi;

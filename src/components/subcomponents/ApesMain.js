@@ -29,7 +29,7 @@ const ApesMain = (props) => {
                 </a>
               }
             >
-              <Card.Meta style={{ textAlign: "center" }} title={ape} />
+              <Card.Meta style={{ textAlign: "center" }} title={ape.toString()} />
             </Card>
           </Col>
         ))}
