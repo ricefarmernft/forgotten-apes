@@ -11,7 +11,7 @@ export default function useIdFilter( claimed, setUnclaimed ,searchTerm ,reverse 
     // Filter array by claimed apes
     if (claimed && reverse) {
       const differences = array.filter((apes) => claimed?.includes(apes));
-      //   Filter apes by ID
+      //   Filter apes by ID, low to high
       const filteredApes = differences?.filter((ape) =>
         String(ape).includes(searchTerm)
       );
@@ -19,7 +19,7 @@ export default function useIdFilter( claimed, setUnclaimed ,searchTerm ,reverse 
       // Filter array by unclaimed apes
     } else if (claimed) {
       const differences = array.filter((apes) => !claimed?.includes(apes));
-      //   Filter apes by ID
+      //   Filter apes by ID, low to high
       const filteredApes = differences?.filter((ape) =>
         String(ape).includes(searchTerm)
       );
