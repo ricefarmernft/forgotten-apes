@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import "./App.css";
 import Navbar from "./components/Navbar";
 import Home from "./components/Home";
+import ForgottenApes from "./components/ForgottenApes";
 import UnclaimedApe from "./components/UnclaimedApe";
 import UnclaimedDog from "./components/UnclaimedDog";
 import UnclaimedOtherside from "./components/UnclaimedOtherside";
@@ -22,6 +23,11 @@ function App() {
         <Content>
           <Routes>
             <Route exact path="/" element={<Home />}></Route>
+            <Route
+              exact
+              path="/forgotten-apes"
+              element={<ForgottenApes />}
+            ></Route>
             <Route
               exact
               path="/unclaimed-ape"

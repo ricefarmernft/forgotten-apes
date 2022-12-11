@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Layout } from "antd";
 import { useGetApecoinApeQuery } from "../services/etherscanApi";
-import { useGetNftsQuery } from "../services/alchemyApi";
 import useSetClaimed from "../functions/useSetClaimed";
 import useSetUnclaimed from "../functions/useSetUnclaimed";
 import useIdFilter from "../functions/useIdFilter";
