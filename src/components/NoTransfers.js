@@ -5,8 +5,12 @@ import TitleMain from "./subcomponents/TitleMain";
 import ApesMain from "./subcomponents/ApesMain";
 import SortMain from "./subcomponents/SortMain";
 import getRandomApes from "../functions/getRandomApes";
+import Loader from "./subcomponents/Loader";
 import { createAlchemyWeb3 } from "@alch/alchemy-web3";
-import { useGetPastHoldersQuery, useGetCurrentHoldersQuery } from "../services/alchemyApi";
+import {
+  useGetPastHoldersQuery,
+  useGetCurrentHoldersQuery,
+} from "../services/alchemyApi";
 
 const web3 = new createAlchemyWeb3(
   "https://eth-mainnet.g.alchemy.com/v2/weAIDXHKw7995TqqNVUtFtLATPvXpYhz"
@@ -15,52 +19,79 @@ const web3 = new createAlchemyWeb3(
 const { Content } = Layout;
 
 const NoTransfers = () => {
+  const [loading, setLoading] = useState(true);
+
   const [untransferredApes, setUntransferredApes] = useState();
   const [filteredApes, setFilteredApes] = useState();
   const [searchTerm, setSearchTerm] = useState();
   const [totalApes, setTotalApes] = useState();
 
-  const lastApeBlock = 12347249
+  const lastApeBlock = 12347249;
 
-  const {data:current, isFetching:currentFetching} = useGetCurrentHoldersQuery()
-  const {data:past, isFetching: pastFetching} = useGetPastHoldersQuery(lastApeBlock)
+  const { data: current, isFetching: currentFetching } =
+    useGetCurrentHoldersQuery();
+  const { data: past, isFetching: pastFetching } =
+    useGetPastHoldersQuery(lastApeBlock);
 
   useEffect(() => {
     // Find all ape wallets at the end of the BAYC mint
     let pastArray = [];
-    const pastOwner = past?.ownerAddresses?.map(({ownerAddress, tokenBalances}) => tokenBalances.map(({tokenId}) => pastArray.push(ownerAddress + tokenId)));
+    const pastOwner = past?.ownerAddresses?.map(
+      ({ ownerAddress, tokenBalances }) =>
+        tokenBalances.map(({ tokenId }) =>
+          pastArray.push(ownerAddress + tokenId)
+        )
+    );
     // Find current ape wallets
     let currentArray = [];
-    const currentOwner = current?.ownerAddresses?.map(({ownerAddress, tokenBalances}) => tokenBalances.map(({tokenId}) => currentArray.push(ownerAddress + tokenId)));
-    // Match current and past ape wallets to see if they are the same
-    const matchingArray = currentArray.filter(value => pastArray.includes(value))
-    // If wallets match, then ape is still owned by original minter
-    const apeNumbers = matchingArray.map(array => web3.utils.hexToNumber(array.substring(42)))
-
-    setUntransferredApes(getRandomApes(apeNumbers))
-    setFilteredApes(apeNumbers)
-    setTotalApes(apeNumbers.length)
-
-  }, [current, past])
-
-    // Filter apes by ID
-    useIdFilter(filteredApes, setUntransferredApes, searchTerm, true);
-
-
-    if (currentFetching || pastFetching) return "Loading...";
-
-    return (
-      <Content>
-        <TitleMain number={totalApes} setSearchTerm={setSearchTerm}>
-          {totalApes} apes are in the same wallet that minted them.
-        </TitleMain>
-        <SortMain
-          setUnclaimed={setUntransferredApes}
-          unclaimed={untransferredApes}
-        />
-        <ApesMain unclaimed={untransferredApes} />
-      </Content>
+    const currentOwner = current?.ownerAddresses?.map(
+      ({ ownerAddress, tokenBalances }) =>
+        tokenBalances.map(({ tokenId }) =>
+          currentArray.push(ownerAddress + tokenId)
+        )
     );
+    // Match current and past ape wallets to see if they are the same
+    const matchingArray = currentArray.filter((value) =>
+      pastArray.includes(value)
+    );
+    // If wallets match, then ape is still owned by original minter
+    const apeNumbers = matchingArray.map((array) =>
+      web3.utils.hexToNumber(array.substring(42))
+    );
+
+    setUntransferredApes(getRandomApes(apeNumbers));
+    setFilteredApes(apeNumbers);
+    setTotalApes(apeNumbers.length);
+  }, [current, past]);
+
+    // Set loader to false
+    useEffect(() => {
+      if (untransferredApes) {
+        setLoading(false);
+      }
+    }, [untransferredApes]);
+
+  // Filter apes by ID
+  useIdFilter(filteredApes, setUntransferredApes, searchTerm, true);
+
+  return (
+    <Content>
+      {loading ? (
+        <Loader />
+      ) : (
+        <>
+          <TitleMain number={totalApes} setSearchTerm={setSearchTerm}>
+            {totalApes} apes are in the same wallet that minted them.
+          </TitleMain>
+          <SortMain
+            setUnclaimed={setUntransferredApes}
+            unclaimed={untransferredApes}
+          />
+          <ApesMain unclaimed={untransferredApes} />
+        </>
+      )}
+    </Content>
+  );
 };
 
 export default NoTransfers;

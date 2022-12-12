@@ -6,11 +6,14 @@ import useIdFilter from "../functions/useIdFilter";
 import TitleMain from "./subcomponents/TitleMain";
 import ApesMain from "./subcomponents/ApesMain";
 import SortMain from "./subcomponents/SortMain";
+import Loader from "./subcomponents/Loader";
 import getRandomApes from "../functions/getRandomApes";
 
 const { Content } = Layout;
 
 const UnclaimedOtherside = () => {
+  const [loading, setLoading] = useState(true);
+
   const [yugaClaimedOtherside, setYugaClaimedOtherside] = useState();
   const [unclaimedOtherside, setUnclaimedOtherside] = useState();
   const [totalApes, setTotalApes] = useState();
@@ -29,23 +32,22 @@ const UnclaimedOtherside = () => {
       setTotalApes(unclaimedApes?.length);
       setUnclaimedOtherside(getRandomApes(unclaimedApes));
     }
+    return () => setLoading(false);
   }, [yugaClaimedOtherside]);
 
   //   Filter apes by Id
   useIdFilter(yugaClaimedOtherside, setUnclaimedOtherside, searchTerm, true);
 
-  if (isFetching) return "Loading...";
-
   return (
     <Content>
-      <TitleMain number={totalApes} setSearchTerm={setSearchTerm}>
-        {totalApes} apes never claimed their Otherside land.
-      </TitleMain>
-      <SortMain
-        setUnclaimed={setUnclaimedOtherside}
-        unclaimed={unclaimedOtherside}
-      />
-      <ApesMain unclaimed={unclaimedOtherside} />
+      {loading ? (
+        <Loader />
+      ) : (
+      <><TitleMain number={totalApes} setSearchTerm={setSearchTerm}>
+            {totalApes} apes never claimed their Otherside land.
+          </TitleMain><SortMain
+              setUnclaimed={setUnclaimedOtherside}
+              unclaimed={unclaimedOtherside} /><ApesMain unclaimed={unclaimedOtherside} /></>)}
     </Content>
   );
 };

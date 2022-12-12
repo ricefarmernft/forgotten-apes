@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Layout, Spin } from "antd";
+import { Layout } from "antd";
 import {
   useGetApecoinApeQuery,
   useGetOthersideApeQuery,
@@ -11,6 +11,7 @@ import useIdFilter from "../functions/useIdFilter";
 import TitleMain from "./subcomponents/TitleMain";
 import ApesMain from "./subcomponents/ApesMain";
 import SortMain from "./subcomponents/SortMain";
+import Loader from "./subcomponents/Loader";
 import { useGetCurrentHoldersQuery } from "../services/alchemyApi";
 import { createAlchemyWeb3 } from "@alch/alchemy-web3";
 import getRandomApes from "../functions/getRandomApes";
@@ -23,6 +24,8 @@ const { Content } = Layout;
 const lastOthersideBlock = 14680891;
 
 const ForgottenApes = () => {
+  const [loading, setLoading] = useState(true);
+
   const [claimedApes, setClaimedApes] = useState();
   const [unclaimedApes, setUnclaimedApes] = useState();
 
@@ -73,10 +76,11 @@ const ForgottenApes = () => {
       setMatchingApes(matchingData);
     }
   }, [unclaimedApes, unclaimedOtherside]);
-
+  // Fetch current Ape holders
   const { data: currentHolders, isFetching: currentHoldersFetching } =
     useGetCurrentHoldersQuery();
 
+  //
   useEffect(() => {
     const tokenHex = [];
     const hexBegin =
@@ -91,12 +95,15 @@ const ForgottenApes = () => {
 
     const hexAddress = [];
     const hexTokenAddress = [];
+    // Extract wallet addresses and token ID in each wallet address
     currentHolders?.ownerAddresses?.map(({ ownerAddress, tokenBalances }) =>
       tokenBalances.map(({ tokenId }) =>
         tokenHex.filter((element) => {
           if (tokenId?.includes(element)) {
+            // Push wallet addresses into an array
             hexAddress.push(ownerAddress);
             let token = web3.utils.hexToNumber(tokenId);
+            // Push wallet addresses and token ID into an array
             hexTokenAddress.push({ token: token, address: ownerAddress });
           }
         })
@@ -104,6 +111,7 @@ const ForgottenApes = () => {
     );
     setMatchingTokensAddresses(hexTokenAddress);
 
+    // Remove duplicate wallet addresses
     let uniqueHexAddress = [];
     hexAddress.forEach((address) => {
       if (!uniqueHexAddress.includes(address)) {
@@ -116,18 +124,18 @@ const ForgottenApes = () => {
   useEffect(() => {
     if (matchingAddresses) {
       const inactiveAddressArr = [];
-
+      // Get transaction count for wallet addresses
       const promises = matchingAddresses?.map((address) => {
         const allTx = web3.eth.getTransactionCount(address).then();
 
         const beforeTx = web3.eth
           .getTransactionCount(address, lastOthersideBlock)
           .then();
-
+        // Get transaction count for wallet addresses between lastOthersideBlock and most recent Block
         async function getTransactionCount() {
           const allTxs = await allTx;
           const beforeTxs = await beforeTx;
-
+          // If there are no recent transactions, add it to the inactiveAddressArr array
           if (allTxs - beforeTxs === 0) {
             inactiveAddressArr.push(address);
           }
@@ -135,20 +143,20 @@ const ForgottenApes = () => {
 
         return getTransactionCount();
       });
+      //   Set inactiveAddresses once all promises have returned
       Promise.all(promises).then(() => {
         setInactiveAddresses(inactiveAddressArr);
       });
-
     }
   }, [matchingAddresses]);
-
-  //   console.log(inactiveArray)
 
   useEffect(() => {
     // const finalApess = inactiveAddresses.map((element) => {
     //     return matchingTokensAddresses.filter(({token, address}) => address.includes(element))
     // })
     // console.log(finalApess)
+
+    // Filter out active addresses
     if (inactiveAddresses) {
       const finalApes = matchingTokensAddresses?.filter(
         ({ token, address }) => {
@@ -159,7 +167,7 @@ const ForgottenApes = () => {
       );
 
       let lostApesArray = [];
-
+      // Add ape ID numbers to lostApesArray
       finalApes.map(({ token }) => {
         lostApesArray.push(token);
       });
@@ -169,25 +177,29 @@ const ForgottenApes = () => {
     }
   }, [inactiveAddresses]);
 
-  console.log(lostApes);
+  // Set loader to false
+  useEffect(() => {
+    if (totalApes) {
+      setLoading(false);
+    }
+  }, [totalApes]);
 
   // Filter apes by ID
   useIdFilter(filteredApes, setLostApes, searchTerm, true);
 
-  if (apecoinFetching || othersideFetching || currentHoldersFetching)
-    return (
-        <Spin tip="Loading" size="large">
-        <div className="content" />
-      </Spin>
-    );
-
   return (
     <Content>
-      <TitleMain number={totalApes} setSearchTerm={setSearchTerm}>
-        {totalApes} apes never claimed their Otherside land.
-      </TitleMain>
-      <SortMain setUnclaimed={setLostApes} unclaimed={lostApes} />
-      <ApesMain unclaimed={lostApes} />
+      {loading ? (
+        <Loader />
+      ) : (
+        <>
+          <TitleMain number={totalApes} setSearchTerm={setSearchTerm}>
+            {totalApes} apes never claimed their Otherside land.
+          </TitleMain>
+          <SortMain setUnclaimed={setLostApes} unclaimed={lostApes} />
+          <ApesMain unclaimed={lostApes} />
+        </>
+      )}
     </Content>
   );
 };

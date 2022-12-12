@@ -5,6 +5,7 @@ import useIdFilter from "../functions/useIdFilter";
 import TitleMain from "./subcomponents/TitleMain";
 import ApesMain from "./subcomponents/ApesMain";
 import SortMain from "./subcomponents/SortMain";
+import Loader from "./subcomponents/Loader";
 import { createAlchemyWeb3 } from "@alch/alchemy-web3";
 
 const web3 = new createAlchemyWeb3(
@@ -14,6 +15,8 @@ const web3 = new createAlchemyWeb3(
 const { Content } = Layout;
 
 const BurnedApes = () => {
+  const [loading, setLoading] = useState(true);
+
   const [burnedApes, setBurnedApes] = useState();
   const [filteredApes, setFilteredApes] = useState();
   const [searchTerm, setSearchTerm] = useState();
@@ -51,18 +54,29 @@ const BurnedApes = () => {
   //   Set Total Apes Burned
   const totalApes = dead?.totalCount + zero?.totalCount;
 
+  // Set loader to false
+  useEffect(() => {
+    if (burnedApes) {
+      setLoading(false);
+    }
+  }, [burnedApes]);
+
   // Filter apes by ID
   useIdFilter(filteredApes, setBurnedApes, searchTerm, true);
 
-  if (isFetching || isFetching1) return "Loading...";
-
   return (
     <Content>
-      <TitleMain number={totalApes} setSearchTerm={setSearchTerm}>
-        {totalApes} apes have been burned.
-      </TitleMain>
-      <SortMain setUnclaimed={setBurnedApes} unclaimed={burnedApes} />
-      <ApesMain unclaimed={burnedApes}></ApesMain>
+      {loading ? (
+        <Loader />
+      ) : (
+        <>
+          <TitleMain number={totalApes} setSearchTerm={setSearchTerm}>
+            {totalApes} apes have been burned.
+          </TitleMain>
+          <SortMain setUnclaimed={setBurnedApes} unclaimed={burnedApes} />
+          <ApesMain unclaimed={burnedApes} />
+        </>
+      )}
     </Content>
   );
 };

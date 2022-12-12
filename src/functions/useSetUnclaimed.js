@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import getRandomApes from "./getRandomApes";
 
 // Set Apes that have not claimed (data)
-export default function useSetUnclaimed(claimed, setUnclaim) {
+export default function useSetUnclaimed(claimed, setUnclaim, setLoading) {
   useEffect(() => {
     // Create array 0-10,000
     const array = [];
@@ -15,5 +15,8 @@ export default function useSetUnclaimed(claimed, setUnclaim) {
       //   Set unclaimed apes (random)
       setUnclaim(getRandomApes(apeDifferences));
     }
+    return () => {
+      if (setLoading) setLoading(false);
+    };
   }, [claimed]);
 }

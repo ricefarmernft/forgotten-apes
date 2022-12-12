@@ -7,10 +7,12 @@ import useIdFilter from "../functions/useIdFilter";
 import TitleMain from "./subcomponents/TitleMain";
 import ApesMain from "./subcomponents/ApesMain";
 import SortMain from "./subcomponents/SortMain";
+import Loader from "./subcomponents/Loader";
 
 const { Content } = Layout;
 
 const UnclaimedApe = () => {
+  const [loading, setLoading] = useState(true);
   const [claimedApes, setClaimedApes] = useState();
   const [unclaimedApes, setUnclaimedApes] = useState();
 
@@ -25,20 +27,24 @@ const UnclaimedApe = () => {
   useSetClaimed(data, 1, setClaimedApes);
 
   // Set Unclaimed Apes
-  useSetUnclaimed(claimedApes, setUnclaimedApes);
+  useSetUnclaimed(claimedApes, setUnclaimedApes, setLoading);
 
   // Filter apes by ID
   useIdFilter(claimedApes, setUnclaimedApes, searchTerm);
 
-  if (isFetching) return "Loading...";
-
   return (
     <Content>
-      <TitleMain number={totalApes} setSearchTerm={setSearchTerm}>
-        {totalApes} apes never claimed their Apecoin airdrop.
-      </TitleMain>
-      <SortMain setUnclaimed={setUnclaimedApes} unclaimed={unclaimedApes} />
-      <ApesMain unclaimed={unclaimedApes}></ApesMain>
+      {loading ? (
+        <Loader />
+      ) : (
+        <>
+          <TitleMain number={totalApes} setSearchTerm={setSearchTerm}>
+            {totalApes} apes never claimed their Apecoin airdrop.
+          </TitleMain>
+          <SortMain setUnclaimed={setUnclaimedApes} unclaimed={unclaimedApes} />
+          <ApesMain unclaimed={unclaimedApes}></ApesMain>
+        </>
+      )}
     </Content>
   );
 };
