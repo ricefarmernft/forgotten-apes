@@ -9,9 +9,6 @@ export default configureStore({
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
-      immutableCheck: {
-        ignoredPaths: ["items.data"],
-      },
-      serializableCheck: { ignoredPaths: ["some.nested.paths"] },
+      serializableCheck: false,
     }).concat([etherscanApi.middleware, alchemyApi.middleware]),
 });

@@ -34,6 +34,7 @@ const NoTransfers = () => {
     useGetPastHoldersQuery(lastApeBlock);
 
   useEffect(() => {
+    if (current && past) {
     // Find all ape wallets at the end of the BAYC mint
     let pastArray = [];
     const pastOwner = past?.ownerAddresses?.map(
@@ -58,18 +59,18 @@ const NoTransfers = () => {
     const apeNumbers = matchingArray.map((array) =>
       web3.utils.hexToNumber(array.substring(42))
     );
-
-    setUntransferredApes(getRandomApes(apeNumbers));
     setFilteredApes(apeNumbers);
     setTotalApes(apeNumbers.length);
+    setUntransferredApes(getRandomApes(apeNumbers));
+    }
   }, [current, past]);
 
-    // Set loader to false
-    useEffect(() => {
-      if (untransferredApes) {
-        setLoading(false);
-      }
-    }, [untransferredApes]);
+  // Set loader to false
+  useEffect(() => {
+    if (untransferredApes) {
+      setLoading(false);
+    }
+  }, [untransferredApes]);
 
   // Filter apes by ID
   useIdFilter(filteredApes, setUntransferredApes, searchTerm, true);

@@ -3,12 +3,14 @@ import { Layout, Row, Col, Statistic, Card } from "antd";
 import { useGetApecoinApeQuery } from "../services/etherscanApi";
 import web3 from "web3";
 import getRandomApes from "../functions/getRandomApes";
+import ApesMain from "./subcomponents/ApesMain";
 
 const { Content } = Layout;
 
 const Home = () => {
   const [claimedApes, setClaimedApes] = useState();
   const [unclaimedApes, setUnclaimedApes] = useState();
+  const [homeApes, setHomeApes] = useState();
 
   const { data, isFetching } = useGetApecoinApeQuery();
 
@@ -28,13 +30,22 @@ const Home = () => {
     for (let i = 0; i < 10000; i++) {
       array[i] = i;
     }
-
     if (claimedApes) {
       const apeDifferences = array.filter(
         (apes) => !claimedApes?.includes(apes)
       );
       setUnclaimedApes(getRandomApes(apeDifferences, 18));
     }
+  }, [claimedApes]);
+
+  useEffect(() => {
+    const array = [];
+    for (let i = 0; i < 10000; i++) {
+      array[i] = i;
+    }
+    
+    setHomeApes(getRandomApes(array, 18));
+
   }, [claimedApes]);
 
   if (isFetching) return "Loading...";
@@ -82,40 +93,7 @@ const Home = () => {
           </Col>
         </Row>
       </div>
-      <div className="home-apes">
-        <Row
-          gutter={[{ xs: 8, sm: 16, md: 24, lg: 24 }, 24]}
-          justify="space-around"
-          align="middle"
-        >
-          {unclaimedApes?.map((ape) => (
-            <Col key={ape} xs={12} sm={10} md={8} lg={6} xl={4}>
-              <Card
-                hoverable
-                loading={isFetching}
-                cover={
-                  <a
-                    href={`https://opensea.io/assets/ethereum/0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d/${ape}`}
-                    target="_blank"
-                  >
-                    <img
-                      style={{ width: "100%" }}
-                      alt={`Bored Ape ${ape}`}
-                      src={`https://ipfs.io/ipfs/QmQ6VgRFiVTdKbiebxGvhW3Wa3Lkhpe6SkWBPjGnPkTttS/${ape}.png`}
-                    />
-                  </a>
-                }
-              >
-                <Card.Meta
-                  style={{ textAlign: "center" }}
-                  title={ape}
-                  //   loading={loading}
-                />
-              </Card>
-            </Col>
-          ))}
-        </Row>
-      </div>
+      <ApesMain unclaimed={homeApes} />
     </Content>
   );
 };

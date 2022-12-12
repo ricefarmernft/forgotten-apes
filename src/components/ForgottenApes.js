@@ -194,7 +194,13 @@ const ForgottenApes = () => {
       ) : (
         <>
           <TitleMain number={totalApes} setSearchTerm={setSearchTerm}>
-            {totalApes} apes never claimed their Otherside land.
+            {totalApes} apes are presumed lost. Lost apes satisfy 3 criteria:
+            <ul className="lost-apes-list">
+              <li>Ape did not claim $APE coin</li>
+              <li>Ape did not claim Otherside land</li>
+              <li>Ethereum Address containing the Ape has had no activity since the Otherside mint</li>
+            </ul>
+            
           </TitleMain>
           <SortMain setUnclaimed={setLostApes} unclaimed={lostApes} />
           <ApesMain unclaimed={lostApes} />

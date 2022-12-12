@@ -24,7 +24,7 @@ const ApesMain = (props) => {
                   <img
                     style={{ width: "100%" }}
                     alt={`Bored Ape ${ape}`}
-                    src={`https://ipfs.io/ipfs/QmQ6VgRFiVTdKbiebxGvhW3Wa3Lkhpe6SkWBPjGnPkTttS/${ape}.png`}
+                    src={`https://storage.googleapis.com/nftimagebucket/tokens/0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d/preview/${ape}.png`}
                   />
                 </a>
               }
