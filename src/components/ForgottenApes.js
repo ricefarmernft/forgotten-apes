@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Layout } from "antd";
+import React, { useState, useEffect, useRef } from "react";
+import { Layout, Spin } from "antd";
 import {
   useGetApecoinApeQuery,
   useGetOthersideApeQuery,
@@ -13,7 +13,6 @@ import ApesMain from "./subcomponents/ApesMain";
 import SortMain from "./subcomponents/SortMain";
 import { useGetCurrentHoldersQuery } from "../services/alchemyApi";
 import { createAlchemyWeb3 } from "@alch/alchemy-web3";
-import { match } from "assert";
 import getRandomApes from "../functions/getRandomApes";
 
 const web3 = new createAlchemyWeb3(
@@ -24,8 +23,8 @@ const { Content } = Layout;
 const lastOthersideBlock = 14680891;
 
 const ForgottenApes = () => {
-  const [claimedApes, setClaimedApes] = useState(); 
-  const [unclaimedApes, setUnclaimedApes] = useState(); 
+  const [claimedApes, setClaimedApes] = useState();
+  const [unclaimedApes, setUnclaimedApes] = useState();
 
   const [yugaClaimedOtherside, setYugaClaimedOtherside] = useState();
   const [unclaimedOtherside, setUnclaimedOtherside] = useState();
@@ -66,12 +65,12 @@ const ForgottenApes = () => {
   //   Filter apes with unclaimed $ape and unclaimed otherside
   useEffect(() => {
     if (unclaimedApes && unclaimedOtherside) {
-    let matchingData = unclaimedApes.filter((element) =>
-      unclaimedOtherside.includes(element)
-    );
-    // Sort matching apes low to high
-    matchingData?.sort((a, b) => a - b);
-    setMatchingApes(matchingData);
+      let matchingData = unclaimedApes.filter((element) =>
+        unclaimedOtherside.includes(element)
+      );
+      // Sort matching apes low to high
+      matchingData?.sort((a, b) => a - b);
+      setMatchingApes(matchingData);
     }
   }, [unclaimedApes, unclaimedOtherside]);
 
@@ -116,29 +115,34 @@ const ForgottenApes = () => {
 
   useEffect(() => {
     if (matchingAddresses) {
-      matchingAddresses?.map((address) => {
+      const inactiveAddressArr = [];
+
+      const promises = matchingAddresses?.map((address) => {
         const allTx = web3.eth.getTransactionCount(address).then();
 
         const beforeTx = web3.eth
           .getTransactionCount(address, lastOthersideBlock)
           .then();
-        
+
         async function getTransactionCount() {
           const allTxs = await allTx;
           const beforeTxs = await beforeTx;
 
           if (allTxs - beforeTxs === 0) {
-            setInactiveAddresses((inactiveAddresses) => [
-              ...inactiveAddresses,
-              address,
-            ]);
+            inactiveAddressArr.push(address);
           }
         }
 
-        getTransactionCount();
+        return getTransactionCount();
       });
+      Promise.all(promises).then(() => {
+        setInactiveAddresses(inactiveAddressArr);
+      });
+
     }
   }, [matchingAddresses]);
+
+  //   console.log(inactiveArray)
 
   useEffect(() => {
     // const finalApess = inactiveAddresses.map((element) => {
@@ -146,11 +150,13 @@ const ForgottenApes = () => {
     // })
     // console.log(finalApess)
     if (inactiveAddresses) {
-      const finalApes = matchingTokensAddresses?.filter(({ token, address }) => {
-        if (inactiveAddresses?.includes(address)) {
-          return [token, address];
+      const finalApes = matchingTokensAddresses?.filter(
+        ({ token, address }) => {
+          if (inactiveAddresses?.includes(address)) {
+            return [token, address];
+          }
         }
-      });
+      );
 
       let lostApesArray = [];
 
@@ -160,7 +166,6 @@ const ForgottenApes = () => {
       setTotalApes(lostApesArray.length);
       setFilteredApes(lostApesArray);
       setLostApes(getRandomApes(lostApesArray));
-      
     }
   }, [inactiveAddresses]);
 
@@ -170,7 +175,11 @@ const ForgottenApes = () => {
   useIdFilter(filteredApes, setLostApes, searchTerm, true);
 
   if (apecoinFetching || othersideFetching || currentHoldersFetching)
-    return "Loading...";
+    return (
+        <Spin tip="Loading" size="large">
+        <div className="content" />
+      </Spin>
+    );
 
   return (
     <Content>
