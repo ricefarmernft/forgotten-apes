@@ -14,7 +14,7 @@ const Navbar = (props) => {
     },
     {
       key: 1,
-      label: <Link to="/forgotten-apes">Forgotten Apes</Link>,
+      label: <Link to="/lost-apes">Lost Apes</Link>,
     },
     {
       key: 2,
@@ -35,10 +35,6 @@ const Navbar = (props) => {
     {
       key: 6,
       label: <Link to="/no-transfers">No Transfers</Link>,
-    },
-    {
-      key: 7,
-      label: <Link to="/inactive-wallets">Inactive Wallets</Link>,
     },
   ];
 

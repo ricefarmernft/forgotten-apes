@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import "./App.css";
 import Navbar from "./components/Navbar";
 import Home from "./components/Home";
-import ForgottenApes from "./components/ForgottenApes";
+import LostApes from "./components/LostApes";
 import UnclaimedApe from "./components/UnclaimedApe";
 import UnclaimedDog from "./components/UnclaimedDog";
 import UnclaimedOtherside from "./components/UnclaimedOtherside";
@@ -21,13 +21,13 @@ function App() {
     <>
       <Layout>
         <Navbar />
-        <Content>
+        <Content style={{minHeight: "83vh"}}>
           <Routes>
             <Route exact path="/" element={<Home />}></Route>
             <Route
               exact
-              path="/forgotten-apes"
-              element={<ForgottenApes />}
+              path="/lost-apes"
+              element={<LostApes />}
             ></Route>
             <Route
               exact
