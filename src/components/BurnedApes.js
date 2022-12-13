@@ -6,6 +6,7 @@ import TitleMain from "./subcomponents/TitleMain";
 import ApesMain from "./subcomponents/ApesMain";
 import SortMain from "./subcomponents/SortMain";
 import Loader from "./subcomponents/Loader";
+import SearchMain from "./subcomponents/SearchMain";
 import { createAlchemyWeb3 } from "@alch/alchemy-web3";
 
 const web3 = new createAlchemyWeb3(
@@ -70,9 +71,11 @@ const BurnedApes = () => {
         <Loader />
       ) : (
         <>
-          <TitleMain number={totalApes} setSearchTerm={setSearchTerm}>
+          <TitleMain number={totalApes}>
             {totalApes} apes have been burned.
           </TitleMain>
+          <SearchMain setSearchTerm={setSearchTerm} />
+
           <SortMain setUnclaimed={setBurnedApes} unclaimed={burnedApes} />
           <ApesMain unclaimed={burnedApes} />
         </>

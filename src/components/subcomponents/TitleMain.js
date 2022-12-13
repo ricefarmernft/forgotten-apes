@@ -13,12 +13,6 @@ const TitleMain = (props) => {
       <Text className="title-text" level={3}>
         {children}
       </Text>
-      <div className="search-ape">
-        <Input
-          placeholder="Search Ape ID"
-          onChange={(e) => setSearchTerm(e.target.value)}
-        ></Input>
-      </div>
     </div>
   );
 };

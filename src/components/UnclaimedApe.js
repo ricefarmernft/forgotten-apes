@@ -7,6 +7,7 @@ import useIdFilter from "../functions/useIdFilter";
 import TitleMain from "./subcomponents/TitleMain";
 import ApesMain from "./subcomponents/ApesMain";
 import SortMain from "./subcomponents/SortMain";
+import SearchMain from "./subcomponents/SearchMain";
 import Loader from "./subcomponents/Loader";
 
 const { Content } = Layout;
@@ -40,9 +41,10 @@ const UnclaimedApe = () => {
         <Loader />
       ) : (
         <>
-          <TitleMain number={totalApes} setSearchTerm={setSearchTerm}>
+          <TitleMain number={totalApes}>
             {totalApes} apes never claimed their Apecoin airdrop.
           </TitleMain>
+          <SearchMain setSearchTerm={setSearchTerm} />
           <SortMain setUnclaimed={setUnclaimedApes} unclaimed={unclaimedApes} />
           <ApesMain unclaimed={unclaimedApes}></ApesMain>
         </>

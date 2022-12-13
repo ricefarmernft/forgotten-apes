@@ -11,6 +11,8 @@ import useIdFilter from "../functions/useIdFilter";
 import TitleMain from "./subcomponents/TitleMain";
 import ApesMain from "./subcomponents/ApesMain";
 import SortMain from "./subcomponents/SortMain";
+import SearchMain from "./subcomponents/SearchMain";
+import LostApeWallets from "./LostApeWallets";
 import Loader from "./subcomponents/Loader";
 import { useGetCurrentHoldersQuery } from "../services/alchemyApi";
 import { createAlchemyWeb3 } from "@alch/alchemy-web3";
@@ -39,6 +41,8 @@ const LostApes = () => {
   const [inactiveAddresses, setInactiveAddresses] = useState([]);
 
   const [lostApes, setLostApes] = useState();
+  const [lostApesTable, setLostApesTable] = useState();
+
   const [searchTerm, setSearchTerm] = useState();
   const [filteredApes, setFilteredApes] = useState();
   const [totalApes, setTotalApes] = useState();
@@ -151,11 +155,6 @@ const LostApes = () => {
   }, [matchingAddresses]);
 
   useEffect(() => {
-    // const finalApess = inactiveAddresses.map((element) => {
-    //     return matchingTokensAddresses.filter(({token, address}) => address.includes(element))
-    // })
-    // console.log(finalApess)
-
     // Filter out active addresses
     if (inactiveAddresses) {
       const finalApes = matchingTokensAddresses?.filter(
@@ -165,6 +164,7 @@ const LostApes = () => {
           }
         }
       );
+      setLostApesTable(finalApes)
 
       let lostApesArray = [];
       // Add ape ID numbers to lostApesArray
@@ -193,7 +193,7 @@ const LostApes = () => {
         <Loader />
       ) : (
         <>
-          <TitleMain number={totalApes} setSearchTerm={setSearchTerm}>
+          <TitleMain number={totalApes}>
             {totalApes} apes are presumed lost. Lost apes satisfy 3 criteria:
             <ul className="lost-apes-list">
               <li>Ape did not claim $APE coin</li>
@@ -202,6 +202,8 @@ const LostApes = () => {
             </ul>
             
           </TitleMain>
+          <LostApeWallets table={lostApesTable}/>
+          <SearchMain setSearchTerm={setSearchTerm} />
           <SortMain setUnclaimed={setLostApes} unclaimed={lostApes} />
           <ApesMain unclaimed={lostApes} />
         </>

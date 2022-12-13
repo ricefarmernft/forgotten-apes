@@ -10,9 +10,11 @@ import Loader from "./subcomponents/Loader";
 const { Content } = Layout;
 
 const Home = () => {
+  const [loading, setLoading] = useState(true);
 
   const [homeApes, setHomeApes] = useState();
 
+  // Randomly generate 30 ape Ids
   useEffect(() => {
     const array = [];
     for (let i = 0; i < 10000; i++) {
@@ -20,12 +22,19 @@ const Home = () => {
     }
 
     setHomeApes(getRandomApes(array, 18));
+    setLoading(false)
   }, []);
 
   return (
     <Content>
-      <HomeStatistics />
-      <ApesMain unclaimed={homeApes} />
+      {loading ? (
+        <Loader />
+      ) : (
+        <>
+          <HomeStatistics />
+          <ApesMain unclaimed={homeApes} />
+        </>
+      )}
     </Content>
   );
 };

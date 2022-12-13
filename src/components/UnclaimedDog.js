@@ -8,6 +8,7 @@ import Loader from "./subcomponents/Loader";
 import TitleMain from "./subcomponents/TitleMain";
 import ApesMain from "./subcomponents/ApesMain";
 import SortMain from "./subcomponents/SortMain";
+import SearchMain from "./subcomponents/SearchMain";
 
 const { Content } = Layout;
 
@@ -38,9 +39,10 @@ const UnclaimedDog = () => {
         <Loader />
       ) : (
         <>
-          <TitleMain number={totalApes} setSearchTerm={setSearchTerm}>
+          <TitleMain number={totalApes}>
             {totalApes} apes never claimed their Bored Ape Kennel Club dog.
           </TitleMain>
+          <SearchMain setSearchTerm={setSearchTerm} />
           <SortMain setUnclaimed={setUnclaimedDogs} unclaimed={unclaimedDogs} />
           <ApesMain unclaimed={unclaimedDogs} />
         </>

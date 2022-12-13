@@ -34,7 +34,8 @@ html {
   padding: 20px;
 }
 .search-ape{
-  padding-top: 20px;
+  padding: 20px;
+  padding-top: 0;
   width: 200px;
 }
 .sort-container {
@@ -47,6 +48,9 @@ html {
 }
 .lost-apes-list {
   margin-bottom: 0 !important;
+}
+.lost-wallets{
+  padding: 0 20px;
 }
 .loader {
   display: flex;

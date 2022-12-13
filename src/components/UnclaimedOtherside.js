@@ -7,6 +7,7 @@ import TitleMain from "./subcomponents/TitleMain";
 import ApesMain from "./subcomponents/ApesMain";
 import SortMain from "./subcomponents/SortMain";
 import Loader from "./subcomponents/Loader";
+import SearchMain from "./subcomponents/SearchMain";
 import getRandomApes from "../functions/getRandomApes";
 
 const { Content } = Layout;
@@ -43,11 +44,18 @@ const UnclaimedOtherside = () => {
       {loading ? (
         <Loader />
       ) : (
-      <><TitleMain number={totalApes} setSearchTerm={setSearchTerm}>
+        <>
+          <TitleMain number={totalApes}>
             {totalApes} apes never claimed their Otherside land.
-          </TitleMain><SortMain
-              setUnclaimed={setUnclaimedOtherside}
-              unclaimed={unclaimedOtherside} /><ApesMain unclaimed={unclaimedOtherside} /></>)}
+          </TitleMain>
+          <SearchMain setSearchTerm={setSearchTerm} />
+          <SortMain
+            setUnclaimed={setUnclaimedOtherside}
+            unclaimed={unclaimedOtherside}
+          />
+          <ApesMain unclaimed={unclaimedOtherside} />
+        </>
+      )}
     </Content>
   );
 };

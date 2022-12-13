@@ -6,6 +6,7 @@ import ApesMain from "./subcomponents/ApesMain";
 import SortMain from "./subcomponents/SortMain";
 import getRandomApes from "../functions/getRandomApes";
 import Loader from "./subcomponents/Loader";
+import SearchMain from "./subcomponents/SearchMain";
 import { createAlchemyWeb3 } from "@alch/alchemy-web3";
 import {
   useGetPastHoldersQuery,
@@ -81,9 +82,11 @@ const NoTransfers = () => {
         <Loader />
       ) : (
         <>
-          <TitleMain number={totalApes} setSearchTerm={setSearchTerm}>
+          <TitleMain number={totalApes} >
             {totalApes} apes are in the same wallet that minted them.
           </TitleMain>
+          <SearchMain setSearchTerm={setSearchTerm} />
+
           <SortMain
             setUnclaimed={setUntransferredApes}
             unclaimed={untransferredApes}
