@@ -1,11 +1,10 @@
 import React from "react";
-import { Layout, Menu, Row, Col, Statistic } from "antd";
+import { Layout, Menu } from "antd";
 import { Link } from "react-router-dom";
 
 const { Header } = Layout;
 
-const Navbar = (props) => {
-  const { lostApes } = props;
+const Navbar = () => {
 
   const items = [
     {
@@ -44,13 +43,6 @@ const Navbar = (props) => {
     //   style={{ position: "sticky", backgroundColor: "aqua" }}
     >
       <div className="logo">Forgotten Apes</div>
-      {/* <div className="nav-stats">
-        <Row gutter={12}>
-          <Col gutter={16}>
-            <Statistic title="Lost Apes" />
-          </Col>
-        </Row>
-      </div> */}
       <Menu
         mode="horizontal"
         theme="dark"

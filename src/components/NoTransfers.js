@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { Layout } from "antd";
-import useIdFilter from "../functions/useIdFilter";
-import TitleMain from "./subcomponents/TitleMain";
-import ApesMain from "./subcomponents/ApesMain";
-import SortMain from "./subcomponents/SortMain";
-import getRandomApes from "../functions/getRandomApes";
-import Loader from "./subcomponents/Loader";
-import SearchMain from "./subcomponents/SearchMain";
-import { createAlchemyWeb3 } from "@alch/alchemy-web3";
 import {
   useGetPastHoldersQuery,
   useGetCurrentHoldersQuery,
 } from "../services/alchemyApi";
+import { useIdFilter, getRandomApes } from "../functions/functions";
+import {
+  TitleMain,
+  ApesMain,
+  SearchMain,
+  SortMain,
+  Loader,
+} from "./subcomponents/subcomponents";
+import { createAlchemyWeb3 } from "@alch/alchemy-web3";
 
 const web3 = new createAlchemyWeb3(
   "https://eth-mainnet.g.alchemy.com/v2/weAIDXHKw7995TqqNVUtFtLATPvXpYhz"
@@ -29,40 +30,38 @@ const NoTransfers = () => {
 
   const lastApeBlock = 12347249;
 
-  const { data: current, isFetching: currentFetching } =
-    useGetCurrentHoldersQuery();
-  const { data: past, isFetching: pastFetching } =
-    useGetPastHoldersQuery(lastApeBlock);
+  const { data: current } = useGetCurrentHoldersQuery();
+  const { data: past } = useGetPastHoldersQuery(lastApeBlock);
 
   useEffect(() => {
     if (current && past) {
-    // Find all ape wallets at the end of the BAYC mint
-    let pastArray = [];
-    const pastOwner = past?.ownerAddresses?.map(
-      ({ ownerAddress, tokenBalances }) =>
-        tokenBalances.map(({ tokenId }) =>
-          pastArray.push(ownerAddress + tokenId)
-        )
-    );
-    // Find current ape wallets
-    let currentArray = [];
-    const currentOwner = current?.ownerAddresses?.map(
-      ({ ownerAddress, tokenBalances }) =>
-        tokenBalances.map(({ tokenId }) =>
-          currentArray.push(ownerAddress + tokenId)
-        )
-    );
-    // Match current and past ape wallets to see if they are the same
-    const matchingArray = currentArray.filter((value) =>
-      pastArray.includes(value)
-    );
-    // If wallets match, then ape is still owned by original minter
-    const apeNumbers = matchingArray.map((array) =>
-      web3.utils.hexToNumber(array.substring(42))
-    );
-    setFilteredApes(apeNumbers);
-    setTotalApes(apeNumbers.length);
-    setUntransferredApes(getRandomApes(apeNumbers));
+      // Find all ape wallets at the end of the BAYC mint
+      let pastArray = [];
+      const pastOwner = past?.ownerAddresses?.map(
+        ({ ownerAddress, tokenBalances }) =>
+          tokenBalances.map(({ tokenId }) =>
+            pastArray.push(ownerAddress + tokenId)
+          )
+      );
+      // Find current ape wallets
+      let currentArray = [];
+      const currentOwner = current?.ownerAddresses?.map(
+        ({ ownerAddress, tokenBalances }) =>
+          tokenBalances.map(({ tokenId }) =>
+            currentArray.push(ownerAddress + tokenId)
+          )
+      );
+      // Match current and past ape wallets to see if they are the same
+      const matchingArray = currentArray.filter((value) =>
+        pastArray.includes(value)
+      );
+      // If wallets match, then ape is still owned by original minter
+      const apeNumbers = matchingArray.map((array) =>
+        web3.utils.hexToNumber(array.substring(42))
+      );
+      setFilteredApes(apeNumbers);
+      setTotalApes(apeNumbers.length);
+      setUntransferredApes(getRandomApes(apeNumbers));
     }
   }, [current, past]);
 
@@ -82,7 +81,7 @@ const NoTransfers = () => {
         <Loader />
       ) : (
         <>
-          <TitleMain number={totalApes} >
+          <TitleMain number={totalApes}>
             {totalApes} apes are in the same wallet that minted them.
           </TitleMain>
           <SearchMain setSearchTerm={setSearchTerm} />

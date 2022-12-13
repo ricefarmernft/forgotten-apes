@@ -1,5 +1,5 @@
 import React from 'react'
-import { Input, Typography } from "antd";
+import { Input } from "antd";
 
 const SearchMain = ({setSearchTerm}) => {
   return (

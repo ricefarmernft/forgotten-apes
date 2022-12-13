@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Layout } from "antd";
-import { useGetApecoinApeQuery } from "../services/etherscanApi";
-import web3 from "web3";
-import getRandomApes from "../functions/getRandomApes";
-import ApesMain from "./subcomponents/ApesMain";
-import HomeStatistics from "./subcomponents/HomeStatistics";
-import Loader from "./subcomponents/Loader";
+import {getRandomApes} from "../functions/functions";
+import {
+  HomeStatistics,
+  ApesMain,
+  Loader,
+} from "./subcomponents/subcomponents";
 
 const { Content } = Layout;
 

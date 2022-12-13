@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useRef } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
 import { Row, Col, Card, Layout, Button } from "antd";
 import { useGetMetadataQuery } from "../services/alchemyApi";
-import Loader from "./subcomponents/Loader";
+import {Loader} from "./subcomponents/subcomponents";
 
 const { Content } = Layout;
 

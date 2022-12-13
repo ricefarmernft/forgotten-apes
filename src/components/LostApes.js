@@ -1,22 +1,25 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { Layout } from "antd";
+import { useGetCurrentHoldersQuery } from "../services/alchemyApi";
 import {
   useGetApecoinApeQuery,
   useGetOthersideApeQuery,
 } from "../services/etherscanApi";
-import { useGetNftsQuery } from "../services/alchemyApi";
-import useSetClaimed from "../functions/useSetClaimed";
-import useSetUnclaimed from "../functions/useSetUnclaimed";
-import useIdFilter from "../functions/useIdFilter";
-import TitleMain from "./subcomponents/TitleMain";
-import ApesMain from "./subcomponents/ApesMain";
-import SortMain from "./subcomponents/SortMain";
-import SearchMain from "./subcomponents/SearchMain";
-import LostApeWallets from "./LostApeWallets";
-import Loader from "./subcomponents/Loader";
-import { useGetCurrentHoldersQuery } from "../services/alchemyApi";
+import {
+  useSetClaimed,
+  useSetUnclaimed,
+  useIdFilter,
+  getRandomApes,
+} from "../functions/functions";
+import {
+  TitleMain,
+  ApesMain,
+  SearchMain,
+  SortMain,
+  Loader,
+} from "./subcomponents/subcomponents";
+import {LostApeWallets} from "./components";
 import { createAlchemyWeb3 } from "@alch/alchemy-web3";
-import getRandomApes from "../functions/getRandomApes";
 
 const web3 = new createAlchemyWeb3(
   "https://eth-mainnet.g.alchemy.com/v2/weAIDXHKw7995TqqNVUtFtLATPvXpYhz"
@@ -164,7 +167,7 @@ const LostApes = () => {
           }
         }
       );
-      setLostApesTable(finalApes)
+      setLostApesTable(finalApes);
 
       let lostApesArray = [];
       // Add ape ID numbers to lostApesArray
@@ -198,11 +201,13 @@ const LostApes = () => {
             <ul className="lost-apes-list">
               <li>Ape did not claim $APE coin</li>
               <li>Ape did not claim Otherside land</li>
-              <li>Ethereum Address containing the Ape has had no activity since the Otherside mint</li>
+              <li>
+                Ethereum Address containing the Ape has had no activity since
+                the Otherside mint
+              </li>
             </ul>
-            
           </TitleMain>
-          <LostApeWallets table={lostApesTable}/>
+          <LostApeWallets table={lostApesTable} />
           <SearchMain setSearchTerm={setSearchTerm} />
           <SortMain setUnclaimed={setLostApes} unclaimed={lostApes} />
           <ApesMain unclaimed={lostApes} />

@@ -1,9 +1,9 @@
 import React from "react";
-import { Input, Typography } from "antd";
+import { Typography } from "antd";
 const { Title, Text } = Typography;
 
 const TitleMain = (props) => {
-  const { number, setSearchTerm, children } = props;
+  const { number, children } = props;
 
   return (
     <div className="title-container">

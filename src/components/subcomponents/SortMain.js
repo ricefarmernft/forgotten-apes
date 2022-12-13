@@ -1,8 +1,6 @@
 import React from "react";
 import { Button } from "antd";
-import getRandomApes from "../../functions/getRandomApes";
-import getLowToHighApes from "../../functions/getLowToHighApes";
-import getHighToLowApes from "../../functions/getHighToLowApes";
+import {getRandomApes, getLowToHighApes, getHighToLowApes} from "../../functions/functions"
 
 const SortMain = (props) => {
 

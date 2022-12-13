@@ -1,18 +1,19 @@
-import React, { useState, useEffect } from "react";
-import { Routes, Route } from "react-router-dom";
+import React from "react";
 import "./App.css";
-import Navbar from "./components/Navbar";
-import Home from "./components/Home";
-import LostApes from "./components/LostApes";
-import UnclaimedApe from "./components/UnclaimedApe";
-import UnclaimedDog from "./components/UnclaimedDog";
-import UnclaimedOtherside from "./components/UnclaimedOtherside";
-import NoTransfers from "./components/NoTransfers";
-import BurnedApes from "./components/BurnedApes";
-import InactiveWallets from "./components/InactiveWallets";
-import ApeDetails from "./components/ApeDetails";
-import Footers from "./components/Footers";
+import { Routes, Route } from "react-router-dom";
 import { Layout } from "antd";
+import {
+  Navbar,
+  Home,
+  LostApes,
+  UnclaimedApe,
+  UnclaimedDog,
+  UnclaimedOtherside,
+  BurnedApes,
+  NoTransfers,
+  ApeDetails,
+  Footers,
+} from "./components/components";
 
 const { Content } = Layout;
 
@@ -21,14 +22,10 @@ function App() {
     <>
       <Layout>
         <Navbar />
-        <Content style={{minHeight: "83vh"}}>
+        <Content style={{ minHeight: "83vh" }}>
           <Routes>
             <Route exact path="/" element={<Home />}></Route>
-            <Route
-              exact
-              path="/lost-apes"
-              element={<LostApes />}
-            ></Route>
+            <Route exact path="/lost-apes" element={<LostApes />}></Route>
             <Route
               exact
               path="/unclaimed-ape"
@@ -44,26 +41,9 @@ function App() {
               path="/unclaimed-otherside"
               element={<UnclaimedOtherside />}
             ></Route>
-            <Route
-              exact
-              path="/no-transfers"
-              element={<NoTransfers />}
-            ></Route>
-            <Route
-              exact
-              path="/burned-apes"
-              element={<BurnedApes />}
-            ></Route>
-            <Route
-              exact
-              path="/inactive-wallets"
-              element={<InactiveWallets />}
-            ></Route>
-            <Route
-              exact
-              path="/ape/:ape"
-              element={<ApeDetails />}
-            ></Route>
+            <Route exact path="/no-transfers" element={<NoTransfers />}></Route>
+            <Route exact path="/burned-apes" element={<BurnedApes />}></Route>
+            <Route exact path="/ape/:ape" element={<ApeDetails />}></Route>
           </Routes>
         </Content>
         <Footers />

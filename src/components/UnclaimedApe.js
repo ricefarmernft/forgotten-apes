@@ -1,14 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Layout } from "antd";
 import { useGetApecoinApeQuery } from "../services/etherscanApi";
-import useSetClaimed from "../functions/useSetClaimed";
-import useSetUnclaimed from "../functions/useSetUnclaimed";
-import useIdFilter from "../functions/useIdFilter";
-import TitleMain from "./subcomponents/TitleMain";
-import ApesMain from "./subcomponents/ApesMain";
-import SortMain from "./subcomponents/SortMain";
-import SearchMain from "./subcomponents/SearchMain";
-import Loader from "./subcomponents/Loader";
+import {
+  useSetClaimed,
+  useSetUnclaimed,
+  useIdFilter,
+} from "../functions/functions";
+import {
+  TitleMain,
+  ApesMain,
+  SearchMain,
+  SortMain,
+  Loader,
+} from "./subcomponents/subcomponents";
 
 const { Content } = Layout;
 
@@ -33,7 +37,7 @@ const UnclaimedApe = () => {
   // Filter apes by ID
   useIdFilter(claimedApes, setUnclaimedApes, searchTerm);
 
-  if (error) return error.error
+  if (error) return error.error;
 
   return (
     <Content>

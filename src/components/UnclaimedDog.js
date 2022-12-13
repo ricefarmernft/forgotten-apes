@@ -1,14 +1,18 @@
-import React, { useState, useEffect } from "react";
-import { Layout, Spin } from "antd";
+import React, { useState } from "react";
+import { Layout } from "antd";
 import { useGetDogApeQuery } from "../services/etherscanApi";
-import useSetClaimed from "../functions/useSetClaimed";
-import useSetUnclaimed from "../functions/useSetUnclaimed";
-import useIdFilter from "../functions/useIdFilter";
-import Loader from "./subcomponents/Loader";
-import TitleMain from "./subcomponents/TitleMain";
-import ApesMain from "./subcomponents/ApesMain";
-import SortMain from "./subcomponents/SortMain";
-import SearchMain from "./subcomponents/SearchMain";
+import {
+  useSetClaimed,
+  useSetUnclaimed,
+  useIdFilter,
+} from "../functions/functions";
+import {
+  TitleMain,
+  ApesMain,
+  SearchMain,
+  SortMain,
+  Loader,
+} from "./subcomponents/subcomponents";
 
 const { Content } = Layout;
 

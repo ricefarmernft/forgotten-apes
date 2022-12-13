@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Layout } from "antd";
 import { useGetNftsQuery } from "../services/alchemyApi";
-import useIdFilter from "../functions/useIdFilter";
-import TitleMain from "./subcomponents/TitleMain";
-import ApesMain from "./subcomponents/ApesMain";
-import SortMain from "./subcomponents/SortMain";
-import Loader from "./subcomponents/Loader";
-import SearchMain from "./subcomponents/SearchMain";
+import { useIdFilter } from "../functions/functions";
+import {
+  TitleMain,
+  ApesMain,
+  SearchMain,
+  SortMain,
+  Loader,
+} from "./subcomponents/subcomponents";
+
 import { createAlchemyWeb3 } from "@alch/alchemy-web3";
 
 const web3 = new createAlchemyWeb3(
@@ -22,10 +25,10 @@ const BurnedApes = () => {
   const [filteredApes, setFilteredApes] = useState();
   const [searchTerm, setSearchTerm] = useState();
 
-  const { data: dead, isFetching } = useGetNftsQuery(
+  const { data: dead } = useGetNftsQuery(
     "0x000000000000000000000000000000000000dead"
   );
-  const { data: zero, isFetching1 } = useGetNftsQuery(
+  const { data: zero } = useGetNftsQuery(
     "0x0000000000000000000000000000000000000000"
   );
 
