@@ -23,16 +23,12 @@ html {
 .nav-stats {
   float: right;
 }
-/* :where(.css-dev-only-do-not-override-1s3dcof).ant-statistic .ant-statistic-title {
-  margin-bottom: 4px;
-  color: white;
-  font-size: 14px;
-} */
 
 /* Home */
 .home-stats {
-  padding-top: 20px;
+  padding: 20px;
 }
+
 /* Main */
 .title-container{
   padding: 20px;
@@ -48,6 +44,9 @@ html {
 }
 .main-apes{
   padding: 20px 20px 0 20px;
+}
+.lost-apes-list {
+  margin-bottom: 0 !important;
 }
 .loader {
   display: flex;
