@@ -23,7 +23,7 @@ const web3 = new createAlchemyWeb3(
 const { Content } = Layout;
 const lastOthersideBlock = 14680891;
 
-const ForgottenApes = () => {
+const LostApes = () => {
   const [loading, setLoading] = useState(true);
 
   const [claimedApes, setClaimedApes] = useState();
@@ -210,4 +210,4 @@ const ForgottenApes = () => {
   );
 };
 
-export default ForgottenApes;
+export default LostApes;
