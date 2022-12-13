@@ -5,6 +5,7 @@ import web3 from "web3";
 import getRandomApes from "../functions/getRandomApes";
 import ApesMain from "./subcomponents/ApesMain";
 import HomeStatistics from "./subcomponents/HomeStatistics";
+import Loader from "./subcomponents/Loader";
 
 const { Content } = Layout;
 
@@ -48,7 +49,7 @@ const Home = () => {
     setHomeApes(getRandomApes(array, 18));
   }, [claimedApes]);
 
-  if (isFetching) return "Loading...";
+  if (isFetching) return <Loader />;
 
   return (
     <Content>

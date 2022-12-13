@@ -54,6 +54,26 @@ html {
   align-items: center;
   height: 80vh;
 }
+.ape-details-container {
+  padding: 20px;
+  display: flex;
+}
+.ape-details-image {
+  width: 50%;
+}
+.ape-details-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 50%;
+  padding: 20px;
+  padding-top: 0;
+}
+.ape-details-links {
+  padding: 20px;
+  padding-bottom: 0;
+  justify-content: end;
+}
 /* Footer */
 .footer-blank {
   width: 33%;

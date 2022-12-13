@@ -36,7 +36,13 @@ export const alchemyApi = createApi({
           `getOwnersForToken?contractAddress=${baycAddress}&tokenId=${token}`
         ),
     }),
+    getMetadata: builder.query({
+      query: (tokenId) =>
+        createRequest(
+          `getNFTMetadata?contractAddress=${baycAddress}&tokenId=${tokenId}&tokenType=ERC721&refreshCache=false`
+        ),
+    }),
   }),
 });
 
-export const { useGetNftsQuery, useGetCurrentHoldersQuery, useGetPastHoldersQuery, useGetTokenHoldersQuery } = alchemyApi;
+export const { useGetNftsQuery, useGetCurrentHoldersQuery, useGetPastHoldersQuery, useGetTokenHoldersQuery, useGetMetadataQuery } = alchemyApi;

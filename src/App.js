@@ -10,6 +10,7 @@ import UnclaimedOtherside from "./components/UnclaimedOtherside";
 import NoTransfers from "./components/NoTransfers";
 import BurnedApes from "./components/BurnedApes";
 import InactiveWallets from "./components/InactiveWallets";
+import ApeDetails from "./components/ApeDetails";
 import Footers from "./components/Footers";
 import { Layout } from "antd";
 
@@ -57,6 +58,11 @@ function App() {
               exact
               path="/inactive-wallets"
               element={<InactiveWallets />}
+            ></Route>
+            <Route
+              exact
+              path="/ape/:ape"
+              element={<ApeDetails />}
             ></Route>
           </Routes>
         </Content>
