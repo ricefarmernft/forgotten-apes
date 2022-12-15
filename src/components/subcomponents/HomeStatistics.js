@@ -36,7 +36,7 @@ const HomeStatistics = () => {
           </Col>
           <Col xs={12} sm={8} md={8} lg={8} xl={4}>
             <Card>
-              <Statistic title="No Transfers" value="247" />
+              <Statistic title="No Transfers" value="222" />
             </Card>
           </Col>
         </Row>
