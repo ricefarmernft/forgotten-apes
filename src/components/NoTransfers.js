@@ -11,6 +11,7 @@ import {
   SearchMain,
   SortMain,
   Loader,
+  ErrorMsg,
 } from "./subcomponents/subcomponents";
 import { createAlchemyWeb3 } from "@alch/alchemy-web3";
 
@@ -30,8 +31,8 @@ const NoTransfers = () => {
 
   const lastApeBlock = 12347249;
 
-  const { data: current } = useGetCurrentHoldersQuery();
-  const { data: past } = useGetPastHoldersQuery(lastApeBlock);
+  const { data: current, error: currentError } = useGetCurrentHoldersQuery();
+  const { data: past, error: pastError } = useGetPastHoldersQuery(lastApeBlock);
 
   useEffect(() => {
     if (current && past) {
@@ -74,6 +75,8 @@ const NoTransfers = () => {
 
   // Filter apes by ID
   useIdFilter(filteredApes, setUntransferredApes, searchTerm, true);
+
+  if (currentError || pastError) return <ErrorMsg />
 
   return (
     <Content>

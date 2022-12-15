@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Layout } from "antd";
-import {getRandomApes} from "../functions/functions";
+import { getRandomApes } from "../functions/functions";
 import {
   HomeStatistics,
   ApesMain,
@@ -17,12 +17,12 @@ const Home = () => {
   // Randomly generate 30 ape Ids
   useEffect(() => {
     const array = [];
-    for (let i = 0; i < 10000; i++) {
-      array[i] = i;
+    for (let i = 0; i < 12; i++) {
+      array.push(Math.floor(Math.random() * 10001));
     }
 
-    setHomeApes(getRandomApes(array, 18));
-    setLoading(false)
+    setHomeApes(array);
+    setLoading(false);
   }, []);
 
   return (

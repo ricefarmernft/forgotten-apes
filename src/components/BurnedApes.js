@@ -25,10 +25,10 @@ const BurnedApes = () => {
   const [filteredApes, setFilteredApes] = useState();
   const [searchTerm, setSearchTerm] = useState();
 
-  const { data: dead } = useGetNftsQuery(
+  const { data: dead, error: deadError } = useGetNftsQuery(
     "0x000000000000000000000000000000000000dead"
   );
-  const { data: zero } = useGetNftsQuery(
+  const { data: zero, error: zeroError } = useGetNftsQuery(
     "0x0000000000000000000000000000000000000000"
   );
 
@@ -67,6 +67,8 @@ const BurnedApes = () => {
 
   // Filter apes by ID
   useIdFilter(filteredApes, setBurnedApes, searchTerm, true);
+
+  if (deadError || zeroError) return <div className="error">Error Retrieving Data. Please Reload the Page.</div>;
 
   return (
     <Content>

@@ -3,22 +3,23 @@
   padding: 0;
   box-sizing: border-box;
 }
+@import url('https://fonts.googleapis.com/css2?family=Alegreya&family=Alegreya+SC&display=swap');
+
 html {
   font-size: 62.5%;
 }
-/* Header */
-.navbar {
-  background-color: aqua;
-  /* align-items: center;
-  justify-content: center;
-  display: flex; */
+body {
+  background-color: black;
 }
+/* Header */
 .logo {
+  font-family: 'Alegreya SC', serif;
+  font-size: 1.8rem;
   float: left;
-  width: 120px;
-  height: 30px;
-  margin: 16px 24px 16px 0;
-  background-color: antiquewhite;
+  padding-right: 10px;
+}
+.logo a {
+  color: white !important;
 }
 .nav-stats {
   float: right;
@@ -30,6 +31,9 @@ html {
 }
 
 /* Main */
+.ant-layout-content {
+  min-height: calc(100vh - 146px) !important;
+}
 .title-container{
   padding: 20px;
 }
@@ -40,7 +44,12 @@ html {
 }
 .sort-container {
   display: flex;
+  justify-content: start;
   gap: 20px;
+  padding: 0 20px 0 20px;
+}
+.sort-dropdown {
+  display: none;
   padding: 0 20px 0 20px;
 }
 .main-apes{
@@ -52,11 +61,28 @@ html {
 .lost-wallets{
   padding: 0 20px;
 }
+.lost-wallets-btn {
+  padding-left: 5px;
+  padding-bottom: 10px;
+}
+.lost-wallets-btn button{
+  padding-top: 0 !important;
+}
 .loader {
+  min-height: calc(100vh - 146px);
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 81vh;
+}
+.error {
+  min-height: calc(100vh - 146px);
+  padding: 20px;
+  color: red;
+  text-align: center;
+  font-size: 1.8rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .ape-details-container {
   padding: 20px;
@@ -76,9 +102,11 @@ html {
 .ape-details-links {
   padding: 20px;
   padding-bottom: 0;
-  justify-content: end;
 }
 /* Footer */
+.ant-layout-footer {
+  height: 82px !important;
+}
 .footer-blank {
   width: 33%;
 }
@@ -87,6 +115,7 @@ html {
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-align: center;
 }
 .footer-logos {
   width: 33%;
@@ -94,4 +123,46 @@ html {
   justify-content: flex-end;
   gap: 20px;
   font-size: 28px;
+}
+
+/* Sort Dropdown */
+@media screen and (max-width: 405px) {
+  .sort-container {
+    display: none;
+  }
+  .sort-dropdown {
+    display: flex;
+  }
+  .ant-card-body {
+    padding: 10px !important;
+  }
+  .footer-text {
+    font-size: 1rem;
+  }
+}
+
+/* Ape Details */
+@media screen and (max-width: 768px) {
+  .ape-details-container {
+    flex-direction: column;
+    gap: 20px;
+  }
+  .ape-details-image {
+    width: 100%;
+  }
+  .ape-details-body {
+    width: 100%;
+    padding: 0;
+  }
+  .ape-details-links {
+    display: flex;
+    padding-left: 0;
+  }
+}
+
+/* Footer */
+@media screen and (max-width: 500px) {
+  .ant-layout-footer{
+  padding: 12px 12px !important;
+  }
 }

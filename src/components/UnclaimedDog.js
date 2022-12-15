@@ -12,6 +12,7 @@ import {
   SearchMain,
   SortMain,
   Loader,
+  ErrorMsg,
 } from "./subcomponents/subcomponents";
 
 const { Content } = Layout;
@@ -23,7 +24,7 @@ const UnclaimedDog = () => {
 
   const [searchTerm, setSearchTerm] = useState();
 
-  const { data, isFetching } = useGetDogApeQuery();
+  const { data, error } = useGetDogApeQuery();
 
   // Total unclaimed apes
   const totalApes = 10000 - claimedDogs?.length;
@@ -36,6 +37,8 @@ const UnclaimedDog = () => {
 
   //   Filter apes by ID
   useIdFilter(claimedDogs, setUnclaimedDogs, searchTerm);
+
+  if (error) return <ErrorMsg />
 
   return (
     <Content>

@@ -12,6 +12,7 @@ import {
   SearchMain,
   SortMain,
   Loader,
+  ErrorMsg,
 } from "./subcomponents/subcomponents";
 
 const { Content } = Layout;
@@ -25,7 +26,7 @@ const UnclaimedOtherside = () => {
 
   const [searchTerm, setSearchTerm] = useState();
 
-  const { data, isFetching } = useGetOthersideApeQuery();
+  const { data, error } = useGetOthersideApeQuery();
 
   //   Set Yuga Otherside claims
   useSetClaimed(data, 3, setYugaClaimedOtherside);
@@ -42,6 +43,8 @@ const UnclaimedOtherside = () => {
 
   //   Filter apes by Id
   useIdFilter(yugaClaimedOtherside, setUnclaimedOtherside, searchTerm, true);
+
+  if (error) return <ErrorMsg />
 
   return (
     <Content>

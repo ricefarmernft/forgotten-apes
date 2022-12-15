@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 const { Header } = Layout;
 
 const Navbar = () => {
-
   const items = [
     {
       key: 0,
@@ -21,11 +20,11 @@ const Navbar = () => {
     },
     {
       key: 3,
-      label: <Link to="/unclaimed-dog">Unclaimed Dog</Link>
+      label: <Link to="/unclaimed-dog">Unclaimed Dog</Link>,
     },
     {
       key: 4,
-      label: <Link to="/unclaimed-otherside">Unclaimed Otherside</Link>
+      label: <Link to="/unclaimed-otherside">Unclaimed Otherside</Link>,
     },
     {
       key: 5,
@@ -40,16 +39,16 @@ const Navbar = () => {
   return (
     <Header
       className="navbar"
-    //   style={{ position: "sticky", backgroundColor: "aqua" }}
+      style={{ position: 'sticky', top: 0, zIndex: 1, width: '100%' }}
     >
-      <div className="logo">Forgotten Apes</div>
+      <div className="logo">
+        <Link to="/">Forgotten Apes</Link></div>
       <Menu
         mode="horizontal"
         theme="dark"
         items={items}
         style={{ position: "sticky", justifyContent: "flex-start" }}
       />
-      
     </Header>
   );
 };

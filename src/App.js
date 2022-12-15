@@ -22,7 +22,7 @@ function App() {
     <>
       <Layout>
         <Navbar />
-        <Content style={{ minHeight: "83vh" }}>
+        <Content>
           <Routes>
             <Route exact path="/" element={<Home />}></Route>
             <Route exact path="/lost-apes" element={<LostApes />}></Route>

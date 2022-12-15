@@ -1,9 +1,8 @@
-import React from "react";
-import { Table, Typography } from "antd";
-
-const { Text } = Typography;
+import React, { useState } from "react";
+import { Table, Typography, Button } from "antd";
 
 const LostApeWallets = ({ table }) => {
+  const [tableShow, setTableShow] = useState(false);
   const tableData = [];
 
   //   Refactor tableData by address and token count
@@ -14,6 +13,7 @@ const LostApeWallets = ({ table }) => {
     } else {
       tableData.push({
         address: item.address,
+        subAddress: item.address,
         count: 1,
       });
     }
@@ -26,15 +26,27 @@ const LostApeWallets = ({ table }) => {
     return 0;
   });
 
-  //   Create columsn for table
+  //   Create columns for table
   const columns = [
     {
       title: "Address",
       dataIndex: "address",
       key: "address",
+      responsive: ['sm'],
       render: (text) => (
         <a href={`https://etherscan.io/address/${text}`} target="_blank">
           {text}
+        </a>
+      ),
+    },
+    {
+      title: "Address",
+      dataIndex: "subAddress",
+      key: "subAddress",
+      responsive: ['xs'],
+      render: (text) => (
+        <a href={`https://etherscan.io/address/${text}`} target="_blank">
+          {text.substring(0,4) + "..."}
         </a>
       ),
     },
@@ -45,37 +57,28 @@ const LostApeWallets = ({ table }) => {
     },
   ];
 
+  const handleClick = (event) => {
+    event.preventDefault();
+    setTableShow((current) => !current);
+  };
+
   return (
-    <div id="lost-wallets" className="lost-wallets">
-      <Table
-        dataSource={sortedData}
-        columns={columns}
-        size="small"
-        // pagination={false}
-        // scroll={{
-        //   x: 0,
-        //   y: 500,
-        // }}
-        // summary={(pageData) => {
-        //   let total = 0;
-        //   pageData.forEach(({ count }) => {
-        //     total += count;
-        //   });
-        //   return (
-        //     <>
-        //       <Table.Summary fixed>
-        //         <Table.Summary.Row>
-        //           <Table.Summary.Cell index={0}>Total</Table.Summary.Cell>
-        //           <Table.Summary.Cell index={1}>
-        //             <Text type="danger">{total}</Text>
-        //           </Table.Summary.Cell>
-        //         </Table.Summary.Row>
-        //       </Table.Summary>
-        //     </>
-        //   );
-        // }}
-      />
-    </div>
+    <>
+      <div className="lost-wallets-btn">
+        <Button
+          size="large"
+          type="link"
+          onClick={handleClick}
+        >
+          {tableShow ? "Hide" : "Show"} Lost Apes Wallets
+        </Button>
+      </div>
+      {tableShow && (
+        <div id="lost-wallets" className="lost-wallets">
+          <Table dataSource={sortedData} columns={columns} size="small" />
+        </div>
+      )}
+    </>
   );
 };
 

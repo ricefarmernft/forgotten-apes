@@ -14,17 +14,25 @@ const Footers = () => {
       }}
     >
       <div className="footer-blank">
-        <div>ricefarmer.eth</div>
+        <div><a href="https://etherscan.io/address/0xd3c6e4583bcc33339d733cb35034362d134a6749" target="_blank">ricefarmer.eth</a></div>
       </div>
       <div className="footer-text">
         <div>Rice Labs ©2022</div>
         <div>All Rights Reserved</div>
       </div>
       <div className="footer-logos">
-        <a href="https://github.com/ricefarmernft" target="_blank" rel="noreferrer">
+        <a
+          href="https://github.com/ricefarmernft"
+          target="_blank"
+          rel="noreferrer"
+        >
           <GithubOutlined />
         </a>
-        <a href="https://twitter.com/RiceFarmerNFT" target="_blank" rel="noreferrer">
+        <a
+          href="https://twitter.com/RiceFarmerNFT"
+          target="_blank"
+          rel="noreferrer"
+        >
           <TwitterOutlined />
         </a>
       </div>

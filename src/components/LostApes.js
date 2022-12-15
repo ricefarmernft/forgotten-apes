@@ -17,8 +17,9 @@ import {
   SearchMain,
   SortMain,
   Loader,
+  ErrorMsg,
 } from "./subcomponents/subcomponents";
-import {LostApeWallets} from "./components";
+import { LostApeWallets } from "./components";
 import { createAlchemyWeb3 } from "@alch/alchemy-web3";
 
 const web3 = new createAlchemyWeb3(
@@ -84,7 +85,7 @@ const LostApes = () => {
     }
   }, [unclaimedApes, unclaimedOtherside]);
   // Fetch current Ape holders
-  const { data: currentHolders, isFetching: currentHoldersFetching } =
+  const { data: currentHolders, error } =
     useGetCurrentHoldersQuery();
 
   //
@@ -190,6 +191,8 @@ const LostApes = () => {
   // Filter apes by ID
   useIdFilter(filteredApes, setLostApes, searchTerm, true);
 
+  if (error) return <ErrorMsg />
+
   return (
     <Content>
       {loading ? (
@@ -206,6 +209,9 @@ const LostApes = () => {
                 the Otherside mint
               </li>
             </ul>
+            This is likely an overestimate as BAYC is relatively new and there
+            are other reasons why a wallet may be inactive or not claim $APE and
+            land.
           </TitleMain>
           <LostApeWallets table={lostApesTable} />
           <SearchMain setSearchTerm={setSearchTerm} />

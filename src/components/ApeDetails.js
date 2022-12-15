@@ -79,8 +79,8 @@ const ApeDetails = () => {
             >
               <Col
                 style={{ textAlign: "center" }}
-                xs={24}
-                sm={24}
+                xs={12}
+                sm={12}
                 md={12}
                 lg={12}
                 xl={12}
@@ -89,8 +89,8 @@ const ApeDetails = () => {
               </Col>
               <Col
                 style={{ textAlign: "center" }}
-                xs={24}
-                sm={24}
+                xs={12}
+                sm={12}
                 md={12}
                 lg={12}
                 xl={12}
