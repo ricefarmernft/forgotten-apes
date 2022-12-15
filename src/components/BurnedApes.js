@@ -8,6 +8,7 @@ import {
   SearchMain,
   SortMain,
   Loader,
+  ErrorMsg
 } from "./subcomponents/subcomponents";
 
 import { createAlchemyWeb3 } from "@alch/alchemy-web3";
@@ -68,7 +69,7 @@ const BurnedApes = () => {
   // Filter apes by ID
   useIdFilter(filteredApes, setBurnedApes, searchTerm, true);
 
-  if (deadError || zeroError) return <div className="error">Error Retrieving Data. Please Reload the Page.</div>;
+  if (deadError || zeroError) return <ErrorMsg />
 
   return (
     <Content>
