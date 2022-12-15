@@ -141,6 +141,10 @@ body {
   .footer-text {
     font-size: 1rem;
   }
+  .ant-layout-header {
+    padding-inline: 24px !important;
+  }
+
 }
 
 /* Ape Details */

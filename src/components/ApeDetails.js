@@ -20,13 +20,10 @@ const ApeDetails = () => {
       <div className="ape-details-container">
         <div className="ape-details-image">
           <Row
-            // gutter={[{ xs: 8, sm: 16, md: 24, lg: 24 }, 24]}
             justify="start"
-            //   align="middle"
           >
             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
               <Card
-                hoverable
                 loading={false}
                 cover={
                   <img
