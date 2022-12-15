@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Table, Typography, Button } from "antd";
+import { Table, Button } from "antd";
 
 const LostApeWallets = ({ table }) => {
   const [tableShow, setTableShow] = useState(false);
@@ -32,9 +32,13 @@ const LostApeWallets = ({ table }) => {
       title: "Address",
       dataIndex: "address",
       key: "address",
-      responsive: ['sm'],
+      responsive: ["sm"],
       render: (text) => (
-        <a href={`https://etherscan.io/address/${text}`} target="_blank">
+        <a
+          href={`https://etherscan.io/address/${text}`}
+          target="_blank"
+          rel="noreferrer"
+        >
           {text}
         </a>
       ),
@@ -43,10 +47,14 @@ const LostApeWallets = ({ table }) => {
       title: "Address",
       dataIndex: "subAddress",
       key: "subAddress",
-      responsive: ['xs'],
+      responsive: ["xs"],
       render: (text) => (
-        <a href={`https://etherscan.io/address/${text}`} target="_blank">
-          {text.substring(0,4) + "..."}
+        <a
+          href={`https://etherscan.io/address/${text}`}
+          target="_blank"
+          rel="noreferrer"
+        >
+          {text.substring(0, 4) + "..."}
         </a>
       ),
     },
@@ -65,11 +73,7 @@ const LostApeWallets = ({ table }) => {
   return (
     <>
       <div className="lost-wallets-btn">
-        <Button
-          size="large"
-          type="link"
-          onClick={handleClick}
-        >
+        <Button size="large" type="link" onClick={handleClick}>
           {tableShow ? "Hide" : "Show"} Lost Apes Wallets
         </Button>
       </div>

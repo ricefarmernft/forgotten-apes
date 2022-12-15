@@ -3,7 +3,7 @@
   padding: 0;
   box-sizing: border-box;
 }
-@import url('https://fonts.googleapis.com/css2?family=Alegreya&family=Alegreya+SC&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Alegreya&family=Alegreya+SC&display=swap");
 
 html {
   font-size: 62.5%;
@@ -13,7 +13,7 @@ body {
 }
 /* Header */
 .logo {
-  font-family: 'Alegreya SC', serif;
+  font-family: "Alegreya SC", serif;
   font-size: 1.8rem;
   float: left;
   padding-right: 10px;
@@ -29,15 +29,17 @@ body {
 .home-stats {
   padding: 20px;
 }
-
+.home-feature {
+  padding-left: 20px;
+}
 /* Main */
 .ant-layout-content {
   min-height: calc(100vh - 146px) !important;
 }
-.title-container{
+.title-container {
   padding: 20px;
 }
-.search-ape{
+.search-ape {
   padding: 20px;
   padding-top: 0;
   width: 200px;
@@ -52,20 +54,20 @@ body {
   display: none;
   padding: 0 20px 0 20px;
 }
-.main-apes{
+.main-apes {
   padding: 20px 20px 0 20px;
 }
 .lost-apes-list {
   margin-bottom: 0 !important;
 }
-.lost-wallets{
+.lost-wallets {
   padding: 0 20px;
 }
 .lost-wallets-btn {
   padding-left: 5px;
   padding-bottom: 10px;
 }
-.lost-wallets-btn button{
+.lost-wallets-btn button {
   padding-top: 0 !important;
 }
 .loader {
@@ -162,7 +164,7 @@ body {
 
 /* Footer */
 @media screen and (max-width: 500px) {
-  .ant-layout-footer{
-  padding: 12px 12px !important;
+  .ant-layout-footer {
+    padding: 12px 12px !important;
   }
 }

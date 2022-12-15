@@ -51,9 +51,9 @@ const LostApes = () => {
   const [filteredApes, setFilteredApes] = useState();
   const [totalApes, setTotalApes] = useState();
 
-  const { data: apecoin, isFetching: apecoinFetching } =
+  const { data: apecoin, error: apecoinError } =
     useGetApecoinApeQuery();
-  const { data: otherside, isFetching: othersideFetching } =
+  const { data: otherside, error: othersideError } =
     useGetOthersideApeQuery();
 
   //  Set Claimed apecoin Apes
@@ -85,7 +85,7 @@ const LostApes = () => {
     }
   }, [unclaimedApes, unclaimedOtherside]);
   // Fetch current Ape holders
-  const { data: currentHolders, error } =
+  const { data: currentHolders, error: currentError } =
     useGetCurrentHoldersQuery();
 
   //
@@ -191,7 +191,7 @@ const LostApes = () => {
   // Filter apes by ID
   useIdFilter(filteredApes, setLostApes, searchTerm, true);
 
-  if (error) return <ErrorMsg />
+  if (currentError || apecoinError || othersideError ) return <ErrorMsg />
 
   return (
     <Content>

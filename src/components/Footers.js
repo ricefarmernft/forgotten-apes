@@ -14,7 +14,15 @@ const Footers = () => {
       }}
     >
       <div className="footer-blank">
-        <div><a href="https://etherscan.io/address/0xd3c6e4583bcc33339d733cb35034362d134a6749" target="_blank">ricefarmer.eth</a></div>
+        <div>
+          <a
+            href="https://etherscan.io/address/0xd3c6e4583bcc33339d733cb35034362d134a6749"
+            target="_blank"
+            rel="noreferrer"
+          >
+            ricefarmer.eth
+          </a>
+        </div>
       </div>
       <div className="footer-text">
         <div>Rice Labs ©2022</div>

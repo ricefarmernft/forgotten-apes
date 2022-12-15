@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Button, Dropdown } from "antd";
 import {
   getRandomApes,
@@ -8,7 +8,6 @@ import {
 
 const SortMain = (props) => {
   const { unclaimed, setUnclaimed } = props;
-  const [buttonShow, setButtonShow] = useState();
 
   const onRandomClick = () => {
     setUnclaimed(getRandomApes(unclaimed));
