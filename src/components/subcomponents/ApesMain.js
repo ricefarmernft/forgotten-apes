@@ -8,7 +8,10 @@ const ApesMain = (props) => {
   return (
     <div className="main-apes">
       <Row
-        gutter={[{ xs: 8, sm: 16, md: 24, lg: 24 }, 24]}
+        gutter={[
+          { xs: 8, sm: 12, md: 12, lg: 16 },
+          { xs: 8, sm: 12, md: 12, lg: 16 },
+        ]}
         justify="start"
         align="middle"
       >
