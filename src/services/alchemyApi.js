@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-const alchemyApiKey = "weAIDXHKw7995TqqNVUtFtLATPvXpYhz";
+const alchemyApiKey = `${process.env.REACT_APP_ALCHEMY_API_KEY}`;
 const baseUrl = `https://eth-mainnet.g.alchemy.com/nft/v2/${alchemyApiKey}/`;
 const baycAddress = "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d";
 const burnAddress = "0x000000000000000000000000000000000000dead";

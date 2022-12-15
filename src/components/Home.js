@@ -14,16 +14,19 @@ const Home = () => {
 
   const [homeApes, setHomeApes] = useState();
 
-  // Randomly generate 30 ape Ids
+
+  // Set 12 apes for the homepage
   useEffect(() => {
-    const array = [];
-    for (let i = 0; i < 12; i++) {
-      array.push(Math.floor(Math.random() * 10001));
-    }
+    // const array = [];
+    // for (let i = 0; i < 12; i++) {
+    //   array.push(i);
+    // }
+    const array = [7895, 2488, 6384, 4101, 5526, 7071, 1768, 5040, 1, 2, 3, 30];
 
     setHomeApes(array);
     setLoading(false);
   }, []);
+
 
   return (
     <Content>

@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-const api = "PQKBJBWE9EEDEQSJ2QCKDR1W97FY2M2DTR";
+const api = `${process.env.REACT_APP_ETHERSCAN_API_KEY}`;
 
 // Apecoin Claim
 const apeLog0 =
