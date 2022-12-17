@@ -79,7 +79,14 @@ const LostApeWallets = ({ table }) => {
       </div>
       {tableShow && (
         <div id="lost-wallets" className="lost-wallets">
-          <Table dataSource={sortedData} columns={columns} size="small" />
+          <Table
+            dataSource={sortedData}
+            columns={columns}
+            size="small"
+            pagination={{
+              position: ["bottomLeft"],
+            }}
+          />
         </div>
       )}
     </>

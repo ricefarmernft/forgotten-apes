@@ -2,46 +2,62 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import { Row, Col, Card, Layout, Button } from "antd";
 import { useGetMetadataQuery } from "../services/alchemyApi";
-import {Loader} from "./subcomponents/subcomponents";
+import { Loader, ErrorMsg } from "./subcomponents/subcomponents";
+import { useGetTokenHoldersQuery } from "../services/alchemyApi";
 
 const { Content } = Layout;
 
 const ApeDetails = () => {
   const { ape } = useParams();
 
-  const { data, isFetching } = useGetMetadataQuery(ape);
+  const {
+    data: traits,
+    isFetching: traitsFetching,
+    error: traitsError,
+  } = useGetMetadataQuery(ape);
 
-  const metadata = data?.metadata?.attributes;
+  const metadata = traits?.metadata?.attributes;
 
-  if (isFetching) return <Loader />
+  const {
+    data: address,
+    isFetching: addressFetching,
+    error: addressError,
+  } = useGetTokenHoldersQuery(ape);
+  const owner = address?.owners[0];
+
+  if (traitsFetching || addressFetching) return <Loader />;
+  if (traitsError || addressError) return <ErrorMsg />;
 
   return (
     <Content>
       <div className="ape-details-container">
         <div className="ape-details-image">
-          <Row
-            justify="start"
-          >
-            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-              <Card
-                loading={false}
-                cover={
-                  <img
-                    style={{ width: "100%" }}
-                    alt={`Bored Ape ${ape}`}
-                    src={`https://storage.googleapis.com/nftimagebucket/tokens/0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d/preview/${ape}.png`}
-                  />
-                  // </a>
-                }
+          <Row justify="end" className="ape-details-image-row">
+            <Col xs={20} sm={20} md={20} lg={20} xl={20}>
+              <a
+                href={`https://etherscan.io/address/${owner}`}
+                target="_blank"
+                rel="noreferrer"
               >
-                <Card.Meta
-                  style={{ textAlign: "center" }}
-                  title={ape.toString()}
-                />
-              </Card>
+                <Card
+                  className="ape-details-card"
+                  loading={false}
+                  hoverable
+                  cover={
+                    <img
+                      style={{ width: "100%" }}
+                      alt={`Bored Ape ${ape}`}
+                      src={`https://storage.googleapis.com/nftimagebucket/tokens/0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d/preview/${ape}.png`}
+                    />
+                  }
+                >
+                  <Card.Meta
+                    style={{ textAlign: "center" }}
+                    title={ape.toString()}
+                  />
+                </Card>
+              </a>
             </Col>
-                            
-
           </Row>
         </div>
         <div className="ape-details-body">
@@ -51,14 +67,15 @@ const ApeDetails = () => {
                 { xs: 6, sm: 6, md: 12, lg: 12 },
                 { xs: 6, sm: 6, md: 12, lg: 12 },
               ]}
+              className="ape-details-traits-row"
             >
-              <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+              <Col xs={20} sm={20} md={10} lg={10} xl={10}>
                 <Card size="small" title="Trait Count">
                   {metadata?.length}
                 </Card>
               </Col>
               {metadata?.map((data, index) => (
-                <Col key={index} xs={24} sm={24} md={12} lg={12} xl={12}>
+                <Col key={index} xs={20} sm={20} md={10} lg={10} xl={10}>
                   <Card size="small" title={data.trait_type}>
                     {data.value}
                   </Card>
@@ -70,29 +87,41 @@ const ApeDetails = () => {
           <div className="ape-details-links">
             <Row
               gutter={[
-                18,
-                18,
+                { xs: 12, sm: 12, md: 12, lg: 12 },
+                { xs: 12, sm: 12, md: 12, lg: 12 },
               ]}
             >
               <Col
                 style={{ textAlign: "center" }}
                 xs={12}
                 sm={12}
-                md={12}
-                lg={12}
-                xl={12}
+                md={10}
+                lg={10}
+                xl={10}
               >
-                <Button type="primary" href={`https://etherscan.io/nft/0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d/${ape}`} target="_blank">Etherscan</Button>
+                <Button
+                  type="primary"
+                  href={`https://etherscan.io/nft/0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d/${ape}`}
+                  target="_blank"
+                >
+                  Etherscan
+                </Button>
               </Col>
               <Col
                 style={{ textAlign: "center" }}
                 xs={12}
                 sm={12}
-                md={12}
-                lg={12}
-                xl={12}
+                md={10}
+                lg={10}
+                xl={10}
               >
-                <Button type="primary" href={`https://opensea.io/assets/ethereum/0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d/${ape}`} target="_blank">Opensea</Button>
+                <Button
+                  type="primary"
+                  href={`https://opensea.io/assets/ethereum/0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d/${ape}`}
+                  target="_blank"
+                >
+                  Opensea
+                </Button>
               </Col>
             </Row>
           </div>
