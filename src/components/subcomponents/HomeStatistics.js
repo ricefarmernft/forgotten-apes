@@ -2,7 +2,7 @@ import React from "react";
 import { Row, Col, Statistic, Card } from "antd";
 import { Link } from "react-router-dom";
 
-const HomeStatistics = () => {
+const HomeStatistics = ({totalLostApes}) => {
   return (
     <div className="home-stats">
       <Row
@@ -13,7 +13,7 @@ const HomeStatistics = () => {
         <Col xs={12} sm={8} md={8} lg={8} xl={4}>
           <Link to="/lost-apes">
             <Card hoverable>
-              <Statistic title="Lost Apes" value="68" />
+              <Statistic title="Lost Apes" value={totalLostApes} />
             </Card>
           </Link>
         </Col>

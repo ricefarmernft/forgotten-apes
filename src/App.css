@@ -30,7 +30,9 @@ body {
   padding: 20px;
 }
 .home-feature {
-  padding-left: 20px;
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 20px;
 }
 /* Main */
 .ant-layout-content {

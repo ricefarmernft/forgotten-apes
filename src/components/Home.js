@@ -5,22 +5,22 @@ import {
   ApesMain,
   Loader,
 } from "./subcomponents/subcomponents";
+import { Link } from "react-router-dom";
+import {ArrowRightOutlined} from "@ant-design/icons"
 
 const { Content } = Layout;
 const { Text } = Typography;
 
-const Home = () => {
-  const [loading, setLoading] = useState(true);
-
+const Home = (props) => {
   const [homeApes, setHomeApes] = useState();
+
+  const { totalLostApes, lostApes, loading } = props;
 
   // Set 12 apes for the homepage
   useEffect(() => {
-    const array = [7895, 2488, 6384, 4101, 5526, 7071, 1768, 5040, 1, 2, 3, 30];
-
-    setHomeApes(array);
-    setLoading(false);
-  }, []);
+    const lostApesTwelve = lostApes?.slice(0, 12);
+    setHomeApes(lostApesTwelve);
+  }, [lostApes]);
 
   return (
     <Content>
@@ -28,18 +28,10 @@ const Home = () => {
         <Loader />
       ) : (
         <>
-          <HomeStatistics />
+          <HomeStatistics totalLostApes={totalLostApes} />
           <div className="home-feature">
             <Text type="secondary">
-              *Want to feature your Bored Ape below for .05 eth? Contact Rice Farmer
-              on{" "}
-              <a
-                href="https://twitter.com/RiceFarmerNFT"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Twitter
-              </a>
+              <Link to="/lost-apes">Check out more Lost Apes <ArrowRightOutlined /></Link>
             </Text>
           </div>
           <ApesMain unclaimed={homeApes} />

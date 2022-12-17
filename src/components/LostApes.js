@@ -209,9 +209,6 @@ const LostApes = () => {
                 the Otherside mint
               </li>
             </ul>
-            This is likely an overestimate as BAYC is relatively new and there
-            are other reasons why a wallet may be inactive or not claim $APE and
-            land.
           </TitleMain>
           <LostApeWallets table={lostApesTable} />
           <SearchMain setSearchTerm={setSearchTerm} />
