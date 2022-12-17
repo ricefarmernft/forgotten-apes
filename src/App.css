@@ -30,7 +30,9 @@ body {
   padding: 20px;
 }
 .home-feature {
-  padding-left: 20px;
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 20px;
 }
 /* Main */
 .ant-layout-content {
@@ -46,7 +48,7 @@ body {
 }
 .sort-container {
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
   gap: 20px;
   padding: 0 20px 0 20px;
 }
@@ -62,6 +64,7 @@ body {
 }
 .lost-wallets {
   padding: 0 20px;
+  max-width: 600px;
 }
 .lost-wallets-btn {
   padding-left: 5px;
@@ -92,6 +95,11 @@ body {
 }
 .ape-details-image {
   width: 50%;
+  padding: 20px;
+  padding-top: 0;
+}
+.ape-details-card {
+  border-radius: 25px !important;
 }
 .ape-details-body {
   display: flex;
@@ -151,18 +159,32 @@ body {
 @media screen and (max-width: 768px) {
   .ape-details-container {
     flex-direction: column;
+    align-items: center;
     gap: 20px;
   }
   .ape-details-image {
     width: 100%;
+    padding: 0;
   }
   .ape-details-body {
     width: 100%;
     padding: 0;
+    align-items: center;
+  }
+  .ape-details-traits {
+    order: 2;
+  }
+  .ape-details-traits-row {
+    justify-content: center;
   }
   .ape-details-links {
     display: flex;
-    padding-left: 0;
+    order: 1;
+    padding: 0;
+    padding-bottom: 20px;
+  }
+  .ape-details-image-row {
+    justify-content: center !important;
   }
 }
 
