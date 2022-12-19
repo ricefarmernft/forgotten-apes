@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { inject } from "@vercel/analytics";
+import { Analytics } from "@vercel/analytics";
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import { Layout } from "antd";
@@ -55,8 +55,6 @@ function App() {
   const { data: apecoin, error: apecoinError } = useGetApecoinApeQuery();
   const { data: otherside, error: othersideError } = useGetOthersideApeQuery();
 
-  // Vercel analytics
-  inject();
   //  Set Claimed apecoin Apes
   useSetClaimed(apecoin, 1, setClaimedApes);
   // Set Unclaimed apecoin Apes
@@ -193,54 +191,60 @@ function App() {
 
   return (
     <>
-      <Layout>
-        <Navbar />
-        <Content>
-          <Routes>
-            <Route
-              exact
-              path="/"
-              element={
-                <Home
-                  totalLostApes={totalApes}
-                  lostApes={lostApes}
-                  loading={loading}
-                />
-              }
-            ></Route>
-            <Route
-              exact
-              path="/lost-apes"
-              element={
-                <LostApes
-                  totalLostApes={totalApes}
-                  lostApes={lostApes}
-                  loading={loading}
-                />
-              }
-            ></Route>
-            <Route
-              exact
-              path="/unclaimed-ape"
-              element={<UnclaimedApe />}
-            ></Route>
-            <Route
-              exact
-              path="/unclaimed-dog"
-              element={<UnclaimedDog />}
-            ></Route>
-            <Route
-              exact
-              path="/unclaimed-otherside"
-              element={<UnclaimedOtherside />}
-            ></Route>
-            <Route exact path="/no-transfers" element={<NoTransfers />}></Route>
-            <Route exact path="/burned-apes" element={<BurnedApes />}></Route>
-            <Route exact path="/ape/:ape" element={<ApeDetails />}></Route>
-          </Routes>
-        </Content>
-        <Footers />
-      </Layout>
+      <Analytics>
+        <Layout>
+          <Navbar />
+          <Content>
+            <Routes>
+              <Route
+                exact
+                path="/"
+                element={
+                  <Home
+                    totalLostApes={totalApes}
+                    lostApes={lostApes}
+                    loading={loading}
+                  />
+                }
+              ></Route>
+              <Route
+                exact
+                path="/lost-apes"
+                element={
+                  <LostApes
+                    totalLostApes={totalApes}
+                    lostApes={lostApes}
+                    loading={loading}
+                  />
+                }
+              ></Route>
+              <Route
+                exact
+                path="/unclaimed-ape"
+                element={<UnclaimedApe />}
+              ></Route>
+              <Route
+                exact
+                path="/unclaimed-dog"
+                element={<UnclaimedDog />}
+              ></Route>
+              <Route
+                exact
+                path="/unclaimed-otherside"
+                element={<UnclaimedOtherside />}
+              ></Route>
+              <Route
+                exact
+                path="/no-transfers"
+                element={<NoTransfers />}
+              ></Route>
+              <Route exact path="/burned-apes" element={<BurnedApes />}></Route>
+              <Route exact path="/ape/:ape" element={<ApeDetails />}></Route>
+            </Routes>
+          </Content>
+          <Footers />
+        </Layout>
+      </Analytics>
     </>
   );
 }
