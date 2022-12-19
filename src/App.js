@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Analytics } from "@vercel/analytics";
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import { Layout } from "antd";
@@ -191,7 +190,6 @@ function App() {
 
   return (
     <>
-      <Analytics>
         <Layout>
           <Navbar />
           <Content>
@@ -244,7 +242,6 @@ function App() {
           </Content>
           <Footers />
         </Layout>
-      </Analytics>
     </>
   );
 }
