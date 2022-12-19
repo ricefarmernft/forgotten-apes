@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { inject } from "@vercel/analytics";
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import { Layout } from "antd";
@@ -54,6 +55,8 @@ function App() {
   const { data: apecoin, error: apecoinError } = useGetApecoinApeQuery();
   const { data: otherside, error: othersideError } = useGetOthersideApeQuery();
 
+  // Vercel analytics
+  inject();
   //  Set Claimed apecoin Apes
   useSetClaimed(apecoin, 1, setClaimedApes);
   // Set Unclaimed apecoin Apes
