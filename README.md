@@ -27,6 +27,18 @@ APIs:
 - Etherscan API
 - Alchemy API
 
+## Vision
+
+My vision for this project was to showcase all of the apes that are considered “lost” according to certain criteria. This made me think about certain data points I could use to narrow down this amount.
+
+I decided to find 5 different data points that would help me determine if an ape was lost:
+
+1. Unclaimed $Ape
+2. Unclaimed Dog
+3. Unclaimed Otherside
+4. Burned Apes
+5. No Transfers
+
 ## Features
 
 - Homepage
