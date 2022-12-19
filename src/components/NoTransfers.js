@@ -16,7 +16,7 @@ import {
 import { createAlchemyWeb3 } from "@alch/alchemy-web3";
 
 const web3 = new createAlchemyWeb3(
-  "https://eth-mainnet.g.alchemy.com/v2/weAIDXHKw7995TqqNVUtFtLATPvXpYhz"
+  `https://eth-mainnet.g.alchemy.com/v2/${process.env.REACT_APP_ALCHEMY_API_KEY}`
 );
 
 const { Content } = Layout;
