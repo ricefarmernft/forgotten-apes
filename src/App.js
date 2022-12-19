@@ -190,54 +190,58 @@ function App() {
 
   return (
     <>
-      <Layout>
-        <Navbar />
-        <Content>
-          <Routes>
-            <Route
-              exact
-              path="/"
-              element={
-                <Home
-                  totalLostApes={totalApes}
-                  lostApes={lostApes}
-                  loading={loading}
-                />
-              }
-            ></Route>
-            <Route
-              exact
-              path="/lost-apes"
-              element={
-                <LostApes
-                  totalLostApes={totalApes}
-                  lostApes={lostApes}
-                  loading={loading}
-                />
-              }
-            ></Route>
-            <Route
-              exact
-              path="/unclaimed-ape"
-              element={<UnclaimedApe />}
-            ></Route>
-            <Route
-              exact
-              path="/unclaimed-dog"
-              element={<UnclaimedDog />}
-            ></Route>
-            <Route
-              exact
-              path="/unclaimed-otherside"
-              element={<UnclaimedOtherside />}
-            ></Route>
-            <Route exact path="/no-transfers" element={<NoTransfers />}></Route>
-            <Route exact path="/burned-apes" element={<BurnedApes />}></Route>
-            <Route exact path="/ape/:ape" element={<ApeDetails />}></Route>
-          </Routes>
-        </Content>
-        <Footers />
-      </Layout>
+        <Layout>
+          <Navbar />
+          <Content>
+            <Routes>
+              <Route
+                exact
+                path="/"
+                element={
+                  <Home
+                    totalLostApes={totalApes}
+                    lostApes={lostApes}
+                    loading={loading}
+                  />
+                }
+              ></Route>
+              <Route
+                exact
+                path="/lost-apes"
+                element={
+                  <LostApes
+                    totalLostApes={totalApes}
+                    lostApes={lostApes}
+                    loading={loading}
+                  />
+                }
+              ></Route>
+              <Route
+                exact
+                path="/unclaimed-ape"
+                element={<UnclaimedApe />}
+              ></Route>
+              <Route
+                exact
+                path="/unclaimed-dog"
+                element={<UnclaimedDog />}
+              ></Route>
+              <Route
+                exact
+                path="/unclaimed-otherside"
+                element={<UnclaimedOtherside />}
+              ></Route>
+              <Route
+                exact
+                path="/no-transfers"
+                element={<NoTransfers />}
+              ></Route>
+              <Route exact path="/burned-apes" element={<BurnedApes />}></Route>
+              <Route exact path="/ape/:ape" element={<ApeDetails />}></Route>
+            </Routes>
+          </Content>
+          <Footers />
+        </Layout>
     </>
   );
 }
