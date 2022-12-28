@@ -18,8 +18,8 @@ import {
   SortMain,
   Loader,
   ErrorMsg,
+  LostApeWallets
 } from "./subcomponents/subcomponents";
-import { LostApeWallets } from "./components";
 import { createAlchemyWeb3 } from "@alch/alchemy-web3";
 
 const web3 = new createAlchemyWeb3(
