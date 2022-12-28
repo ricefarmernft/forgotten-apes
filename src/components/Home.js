@@ -14,7 +14,7 @@ const { Text } = Typography;
 const Home = (props) => {
   const [homeApes, setHomeApes] = useState();
 
-  const { totalLostApes, lostApes, loading } = props;
+  const { totalNoTransfer,totalLostApes, lostApes, loading } = props;
 
   // Set 12 apes for the homepage
   useEffect(() => {
@@ -28,7 +28,7 @@ const Home = (props) => {
         <Loader />
       ) : (
         <>
-          <HomeStatistics totalLostApes={totalLostApes} />
+          <HomeStatistics totalLostApes={totalLostApes} totalNoTransfer={totalNoTransfer} />
           <div className="home-feature">
             <Text type="secondary">
               <Link to="/lost-apes">Check out more Lost Apes <ArrowRightOutlined /></Link>

@@ -2,7 +2,10 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import { Layout } from "antd";
-import { useGetCurrentHoldersQuery } from "./services/alchemyApi";
+import {
+  useGetCurrentHoldersQuery,
+  useGetPastHoldersQuery,
+} from "./services/alchemyApi";
 import {
   useGetApecoinApeQuery,
   useGetOthersideApeQuery,
@@ -32,6 +35,7 @@ const web3 = new createAlchemyWeb3(
 
 const { Content } = Layout;
 const lastOthersideBlock = 14680891;
+const lastApeBlock = 12347249;
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -49,11 +53,47 @@ function App() {
   const [inactiveAddresses, setInactiveAddresses] = useState([]);
 
   const [lostApes, setLostApes] = useState();
-  const [totalApes, setTotalApes] = useState();
+  const [totalLostApes, setTotalLostApes] = useState();
 
+  const [totalNoTransfer, setTotalNoTransfer] = useState();
+
+  // Find No Transfers Count
+  const { data: current, error: currentsError } = useGetCurrentHoldersQuery();
+  const { data: past, error: pastError } = useGetPastHoldersQuery(lastApeBlock);
+
+  useEffect(() => {
+    if (current && past) {
+      // Find all ape wallets at the end of the BAYC mint
+      let pastArray = [];
+      const pastOwner = past?.ownerAddresses?.map(
+        ({ ownerAddress, tokenBalances }) =>
+          tokenBalances.map(({ tokenId }) =>
+            pastArray.push(ownerAddress + tokenId)
+          )
+      );
+      // Find current ape wallets
+      let currentArray = [];
+      const currentOwner = current?.ownerAddresses?.map(
+        ({ ownerAddress, tokenBalances }) =>
+          tokenBalances.map(({ tokenId }) =>
+            currentArray.push(ownerAddress + tokenId)
+          )
+      );
+      // Match current and past ape wallets to see if they are the same
+      const matchingArray = currentArray.filter((value) =>
+        pastArray.includes(value)
+      );
+      // If wallets match, then ape is still owned by original minter
+      const apeNumbers = matchingArray.map((array) =>
+        web3.utils.hexToNumber(array.substring(42))
+      );
+      setTotalNoTransfer(apeNumbers.length);
+    }
+  }, [current, past]);
+
+  // Find Lost Apes Count
   const { data: apecoin, error: apecoinError } = useGetApecoinApeQuery();
   const { data: otherside, error: othersideError } = useGetOthersideApeQuery();
-
   //  Set Claimed apecoin Apes
   useSetClaimed(apecoin, 1, setClaimedApes);
   // Set Unclaimed apecoin Apes
@@ -173,7 +213,7 @@ function App() {
       finalApes.map(({ token }) => {
         lostApesArray.push(token);
       });
-      setTotalApes(lostApesArray.length);
+      setTotalLostApes(lostApesArray.length);
       // setFilteredApes(lostApesArray);
       setLostApes(getRandomApes(lostApesArray));
     }
@@ -181,67 +221,54 @@ function App() {
 
   // Set loader to false
   useEffect(() => {
-    if (totalApes) {
+    if (totalLostApes) {
       setLoading(false);
     }
-  }, [totalApes]);
+  }, [totalLostApes]);
 
-  if (currentError || apecoinError || othersideError) return <ErrorMsg />;
+  if (currentError || apecoinError || othersideError || currentsError || pastError) return <ErrorMsg />;
 
   return (
     <>
-        <Layout>
-          <Navbar />
-          <Content>
-            <Routes>
-              <Route
-                exact
-                path="/"
-                element={
-                  <Home
-                    totalLostApes={totalApes}
-                    lostApes={lostApes}
-                    loading={loading}
-                  />
-                }
-              ></Route>
-              <Route
-                exact
-                path="/lost-apes"
-                element={
-                  <LostApes
-                    totalLostApes={totalApes}
-                    lostApes={lostApes}
-                    loading={loading}
-                  />
-                }
-              ></Route>
-              <Route
-                exact
-                path="/unclaimed-ape"
-                element={<UnclaimedApe />}
-              ></Route>
-              <Route
-                exact
-                path="/unclaimed-dog"
-                element={<UnclaimedDog />}
-              ></Route>
-              <Route
-                exact
-                path="/unclaimed-otherside"
-                element={<UnclaimedOtherside />}
-              ></Route>
-              <Route
-                exact
-                path="/no-transfers"
-                element={<NoTransfers />}
-              ></Route>
-              <Route exact path="/burned-apes" element={<BurnedApes />}></Route>
-              <Route exact path="/ape/:ape" element={<ApeDetails />}></Route>
-            </Routes>
-          </Content>
-          <Footers />
-        </Layout>
+      <Layout>
+        <Navbar />
+        <Content>
+          <Routes>
+            <Route
+              exact
+              path="/"
+              element={
+                <Home
+                  totalLostApes={totalLostApes}
+                  lostApes={lostApes}
+                  loading={loading}
+                  totalNoTransfer={totalNoTransfer}
+                />
+              }
+            ></Route>
+            <Route exact path="/lost-apes" element={<LostApes />}></Route>
+            <Route
+              exact
+              path="/unclaimed-ape"
+              element={<UnclaimedApe />}
+            ></Route>
+            <Route
+              exact
+              path="/unclaimed-dog"
+              element={<UnclaimedDog />}
+            ></Route>
+            <Route
+              exact
+              path="/unclaimed-otherside"
+              element={<UnclaimedOtherside />}
+            ></Route>
+            <Route exact path="/no-transfers" element={<NoTransfers />}></Route>
+            <Route exact path="/burned-apes" element={<BurnedApes />}></Route>
+            <Route exact path="/ape/:ape" element={<ApeDetails />}></Route>
+          </Routes>
+        </Content>
+        <Footers />
+      </Layout>
     </>
   );
 }
