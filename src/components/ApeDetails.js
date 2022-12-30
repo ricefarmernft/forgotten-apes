@@ -1,13 +1,13 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import { Row, Col, Card, Layout, Button } from "antd";
+import { Row, Col, Card, Layout, Button, ConfigProvider } from "antd";
 import { useGetMetadataQuery } from "../services/alchemyApi";
 import { Loader, ErrorMsg } from "./subcomponents/subcomponents";
 import { useGetTokenHoldersQuery } from "../services/alchemyApi";
 
 const { Content } = Layout;
 
-const ApeDetails = () => {
+const ApeDetails = ({darkMode}) => {
   const { ape } = useParams();
 
   const {
@@ -29,6 +29,16 @@ const ApeDetails = () => {
   if (traitsError || addressError) return <ErrorMsg />;
 
   return (
+    <ConfigProvider
+      theme={{
+        components: {
+          Button: {
+            colorTextLightSolid: (darkMode ? "#000000" : "#fff"),
+            controlOutline: "rgba(5, 145, 255, 0.1)",
+          },
+        },
+    }}
+      >
     <Content>
       <div className="ape-details-container">
         <div className="ape-details-image">
@@ -128,6 +138,7 @@ const ApeDetails = () => {
         </div>
       </div>
     </Content>
+    </ConfigProvider>
   );
 };
 
