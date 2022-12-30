@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
-import { Layout } from "antd";
+import { Layout, ConfigProvider } from "antd";
 import {
   useGetCurrentHoldersQuery,
   useGetPastHoldersQuery,
@@ -16,6 +16,7 @@ import {
   getRandomApes,
 } from "./functions/functions";
 import {
+  DarkMode,
   Navbar,
   Home,
   LostApes,
@@ -38,6 +39,11 @@ const lastOthersideBlock = 14680891;
 const lastApeBlock = 12347249;
 
 function App() {
+  const [darkMode, setDarkMode] = useState(false);
+  const handleDarkClick = () => {
+    setDarkMode(!darkMode);
+  };
+
   const [loading, setLoading] = useState(true);
 
   const [claimedApes, setClaimedApes] = useState();
@@ -226,49 +232,77 @@ function App() {
     }
   }, [totalLostApes]);
 
-  if (currentError || apecoinError || othersideError || currentsError || pastError) return <ErrorMsg />;
+  if (
+    currentError ||
+    apecoinError ||
+    othersideError ||
+    currentsError ||
+    pastError
+  )
+    return <ErrorMsg />;
 
   return (
     <>
-      <Layout>
-        <Navbar />
-        <Content>
-          <Routes>
-            <Route
-              exact
-              path="/"
-              element={
-                <Home
-                  totalLostApes={totalLostApes}
-                  lostApes={lostApes}
-                  loading={loading}
-                  totalNoTransfer={totalNoTransfer}
-                />
-              }
-            ></Route>
-            <Route exact path="/lost-apes" element={<LostApes />}></Route>
-            <Route
-              exact
-              path="/unclaimed-ape"
-              element={<UnclaimedApe />}
-            ></Route>
-            <Route
-              exact
-              path="/unclaimed-dog"
-              element={<UnclaimedDog />}
-            ></Route>
-            <Route
-              exact
-              path="/unclaimed-otherside"
-              element={<UnclaimedOtherside />}
-            ></Route>
-            <Route exact path="/no-transfers" element={<NoTransfers />}></Route>
-            <Route exact path="/burned-apes" element={<BurnedApes />}></Route>
-            <Route exact path="/ape/:ape" element={<ApeDetails />}></Route>
-          </Routes>
-        </Content>
-        <Footers />
-      </Layout>
+      <ConfigProvider
+        theme={{
+          token: {
+            colorBgBase: darkMode ? "#112a45" : "#fff",
+            colorTextBase: darkMode ? "#FAF9F6" : "#000",
+            colorPrimary: darkMode ? "#65b7f3" : "#1677ff",
+            colorLink: darkMode ? "#65b7f3" : "#1677ff",
+            colorLinkHover: darkMode ? "#b7e3fa" : "#69b1ff",
+          },
+        }}
+      >
+        <Layout>
+          <DarkMode handleDarkClick={handleDarkClick} darkMode={darkMode} />
+          <Navbar />
+          <Content>
+            <Routes>
+              <Route
+                exact
+                path="/"
+                element={
+                  <Home
+                    totalLostApes={totalLostApes}
+                    lostApes={lostApes}
+                    loading={loading}
+                    totalNoTransfer={totalNoTransfer}
+                  />
+                }
+              ></Route>
+              <Route exact path="/lost-apes" element={<LostApes />}></Route>
+              <Route
+                exact
+                path="/unclaimed-ape"
+                element={<UnclaimedApe />}
+              ></Route>
+              <Route
+                exact
+                path="/unclaimed-dog"
+                element={<UnclaimedDog />}
+              ></Route>
+              <Route
+                exact
+                path="/unclaimed-otherside"
+                element={<UnclaimedOtherside />}
+              ></Route>
+              <Route
+                exact
+                path="/no-transfers"
+                element={<NoTransfers />}
+              ></Route>
+              <Route exact path="/burned-apes" element={<BurnedApes />}></Route>
+              <Route
+                exact
+                path="/ape/:ape"
+                element={<ApeDetails darkMode={darkMode} />}
+              ></Route>
+            </Routes>
+          </Content>
+          <Footers />
+        </Layout>
+      </ConfigProvider>
     </>
   );
 }
