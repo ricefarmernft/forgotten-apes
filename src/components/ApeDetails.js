@@ -1,5 +1,7 @@
 import React from "react";
 import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { darkSelector } from "../store/store";
 import { Row, Col, Card, Layout, Button, ConfigProvider } from "antd";
 import { useGetMetadataQuery } from "../services/alchemyApi";
 import { Loader, ErrorMsg } from "./subcomponents/subcomponents";
@@ -7,8 +9,10 @@ import { useGetTokenHoldersQuery } from "../services/alchemyApi";
 
 const { Content } = Layout;
 
-const ApeDetails = ({darkMode}) => {
+const ApeDetails = () => {
   const { ape } = useParams();
+
+  const darkMode = useSelector(darkSelector);
 
   const {
     data: traits,
