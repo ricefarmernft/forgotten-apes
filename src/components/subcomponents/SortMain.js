@@ -1,10 +1,12 @@
 import React from "react";
-import { Button, Dropdown } from "antd";
+import { Button, Dropdown, Typography } from "antd";
 import {
   getRandomApes,
   getLowToHighApes,
   getHighToLowApes,
 } from "../../functions/functions";
+
+const { Link } = Typography;
 
 const SortMain = (props) => {
   const { unclaimed, setUnclaimed } = props;
@@ -23,15 +25,15 @@ const SortMain = (props) => {
   const items = [
     {
       key: "1",
-      label: <a onClick={onRandomClick}>Randomize</a>,
+      label: <Link onClick={onRandomClick}>Randomize</Link>,
     },
     {
       key: "2",
-      label: <a onClick={onSortLowHighClick}>Low to High</a>,
+      label: <Link onClick={onSortLowHighClick}>Low to High</Link>,
     },
     {
       key: "3",
-      label: <a onClick={onSortHighLowClick}>High to Low</a>,
+      label: <Link onClick={onSortHighLowClick}>High to Low</Link>,
     },
   ];
 

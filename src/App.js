@@ -28,6 +28,8 @@ import {
   ApeDetails,
   Footers,
 } from "./components/components";
+import { darkSelector } from "./store/store";
+import { useSelector } from "react-redux";
 import { ErrorMsg } from "./components/subcomponents/subcomponents";
 import { createAlchemyWeb3 } from "@alch/alchemy-web3";
 const web3 = new createAlchemyWeb3(
@@ -39,10 +41,7 @@ const lastOthersideBlock = 14680891;
 const lastApeBlock = 12347249;
 
 function App() {
-  const [darkMode, setDarkMode] = useState(false);
-  const handleDarkClick = () => {
-    setDarkMode(!darkMode);
-  };
+  const darkMode = useSelector(darkSelector);
 
   const [loading, setLoading] = useState(true);
 
@@ -255,7 +254,7 @@ function App() {
         }}
       >
         <Layout>
-          <DarkMode handleDarkClick={handleDarkClick} darkMode={darkMode} />
+          <DarkMode />
           <Navbar />
           <Content>
             <Routes>
@@ -293,11 +292,7 @@ function App() {
                 element={<NoTransfers />}
               ></Route>
               <Route exact path="/burned-apes" element={<BurnedApes />}></Route>
-              <Route
-                exact
-                path="/ape/:ape"
-                element={<ApeDetails darkMode={darkMode} />}
-              ></Route>
+              <Route exact path="/ape/:ape" element={<ApeDetails />}></Route>
             </Routes>
           </Content>
           <Footers />
