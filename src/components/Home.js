@@ -6,7 +6,7 @@ import {
   Loader,
 } from "./subcomponents/subcomponents";
 import { Link } from "react-router-dom";
-import {ArrowRightOutlined} from "@ant-design/icons"
+import { ArrowRightOutlined } from "@ant-design/icons";
 
 const { Content } = Layout;
 const { Text } = Typography;
@@ -14,7 +14,7 @@ const { Text } = Typography;
 const Home = (props) => {
   const [homeApes, setHomeApes] = useState();
 
-  const { totalNoTransfer,totalLostApes, lostApes, loading } = props;
+  const { totalNoTransfer, totalLostApes, lostApes, loading } = props;
 
   // Set 12 apes for the homepage
   useEffect(() => {
@@ -25,13 +25,18 @@ const Home = (props) => {
   return (
     <Content>
       {loading ? (
-        <Loader />
+        <Loader>This could take up to 1 minute...</Loader>
       ) : (
         <>
-          <HomeStatistics totalLostApes={totalLostApes} totalNoTransfer={totalNoTransfer} />
+          <HomeStatistics
+            totalLostApes={totalLostApes}
+            totalNoTransfer={totalNoTransfer}
+          />
           <div className="home-feature">
             <Text type="secondary">
-              <Link to="/lost-apes">Check out more Lost Apes <ArrowRightOutlined /></Link>
+              <Link to="/lost-apes">
+                Check out more Lost Apes <ArrowRightOutlined />
+              </Link>
             </Text>
           </div>
           <ApesMain unclaimed={homeApes} />

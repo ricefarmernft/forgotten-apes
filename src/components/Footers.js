@@ -25,7 +25,7 @@ const Footers = () => {
         </div>
       </div>
       <div className="footer-text">
-        <div>Rice Labs ©2022</div>
+        <div>Rice Labs ©2023</div>
         <div>All Rights Reserved</div>
       </div>
       <div className="footer-logos">
