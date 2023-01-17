@@ -54,6 +54,20 @@ body {
   justify-content: flex-end;
   padding: 0 20px;
 }
+.home-link {
+  animation: move-left-right 0.5s ease-in-out infinite alternate;
+}
+.home-link:hover {
+  animation-play-state: paused;
+}
+@keyframes move-left-right {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(10px);
+  }
+}
 /* Main */
 .ant-layout-content {
   min-height: calc(100vh - 146px) !important;

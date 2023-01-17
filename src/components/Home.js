@@ -33,7 +33,7 @@ const Home = (props) => {
             totalNoTransfer={totalNoTransfer}
           />
           <div className="home-feature">
-            <Text type="secondary">
+            <Text type="secondary" className="home-link">
               <Link to="/lost-apes">
                 Check out more Lost Apes <ArrowRightOutlined />
               </Link>
