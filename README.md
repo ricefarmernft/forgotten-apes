@@ -21,6 +21,7 @@ Dependencies:
 - React Redux Toolkit
 - Ant Design
 - Web3.js
+- React Google Analytics 4
 
 APIs:
 

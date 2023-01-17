@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import { Layout, ConfigProvider } from "antd";
 import {
   useGetCurrentHoldersQuery,
@@ -32,9 +32,14 @@ import { darkSelector } from "./store/store";
 import { useSelector } from "react-redux";
 import { ErrorMsg } from "./components/subcomponents/subcomponents";
 import { createAlchemyWeb3 } from "@alch/alchemy-web3";
+import ReactGA from "react-ga4";
+
 const web3 = new createAlchemyWeb3(
   `https://eth-mainnet.g.alchemy.com/v2/${process.env.REACT_APP_ALCHEMY_API_KEY}`
 );
+const googleApi = `${process.env.REACT_APP_GOOGLE_API_KEY}`
+ReactGA.initialize(googleApi);
+
 
 const { Content } = Layout;
 const lastOthersideBlock = 14680891;
@@ -61,6 +66,13 @@ function App() {
   const [totalLostApes, setTotalLostApes] = useState();
 
   const [totalNoTransfer, setTotalNoTransfer] = useState();
+
+  const location = useLocation()
+
+  // Google analytics
+  useEffect(() => {
+    ReactGA.send("pageview", location.pathname)
+  },[location])
 
   // Find No Transfers Count
   const { data: current, error: currentsError } = useGetCurrentHoldersQuery();
