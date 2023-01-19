@@ -44,7 +44,7 @@ const SortMain = (props) => {
           menu={{
             items,
           }}
-          trigger={['click']}
+          trigger={["click"]}
         >
           <Button>Filters</Button>
         </Dropdown>
