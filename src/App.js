@@ -20,6 +20,7 @@ import {
   Navbar,
   Home,
   LostApes,
+  UnclaimedSewer,
   UnclaimedApe,
   UnclaimedDog,
   UnclaimedOtherside,
@@ -37,9 +38,8 @@ import ReactGA from "react-ga4";
 const web3 = new createAlchemyWeb3(
   `https://eth-mainnet.g.alchemy.com/v2/${process.env.REACT_APP_ALCHEMY_API_KEY}`
 );
-const googleApi = `${process.env.REACT_APP_GOOGLE_API_KEY}`
+const googleApi = `${process.env.REACT_APP_GOOGLE_API_KEY}`;
 ReactGA.initialize(googleApi);
-
 
 const { Content } = Layout;
 const lastOthersideBlock = 14680891;
@@ -67,12 +67,12 @@ function App() {
 
   const [totalNoTransfer, setTotalNoTransfer] = useState();
 
-  const location = useLocation()
+  const location = useLocation();
 
   // Google analytics
   useEffect(() => {
-    ReactGA.send("pageview", location.pathname)
-  },[location])
+    ReactGA.send("pageview", location.pathname);
+  }, [location]);
 
   // Find No Transfers Count
   const { data: current, error: currentsError } = useGetCurrentHoldersQuery();
@@ -281,6 +281,11 @@ function App() {
                     totalNoTransfer={totalNoTransfer}
                   />
                 }
+              ></Route>
+              <Route
+                exact
+                path="/unclaimed-sewer"
+                element={<UnclaimedSewer />}
               ></Route>
               <Route exact path="/lost-apes" element={<LostApes />}></Route>
               <Route

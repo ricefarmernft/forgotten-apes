@@ -15,6 +15,10 @@ const Navbar = () => {
       label: <Link to="/lost-apes">Lost Apes</Link>,
     },
     {
+      key: 7,
+      label: <Link to="/unclaimed-sewer">Unclaimed Sewer Pass</Link>,
+    },
+    {
       key: 2,
       label: <Link to="/unclaimed-ape">Unclaimed $APE</Link>,
     },
