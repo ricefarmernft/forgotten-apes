@@ -66,6 +66,12 @@ export const etherscanApi = createApi({
           `?module=logs&action=getLogs&address=${sewerDeployer}&fromBlock=00000000&toBlock=99999999&topic0=${sewerLog0}&topic2=0x0000000000000000000000000000000000000000000000000000000000000004&page=1&offset=10000&apikey=${api}`
         ),
     }),
+    getSewerMutantBakc: builder.query({
+      query: () =>
+        createRequest(
+          `?module=logs&action=getLogs&address=${sewerDeployer}&fromBlock=00000000&toBlock=99999999&topic0=${sewerLog0}&topic2=0x0000000000000000000000000000000000000000000000000000000000000002&page=1&offset=10000&apikey=${api}`
+        ),
+    }),
   }),
 });
 
@@ -74,5 +80,6 @@ export const {
   useGetDogApeQuery,
   useGetOthersideApeQuery,
   useGetSewerApeQuery,
-  useGetSewerApeBakcQuery
+  useGetSewerApeBakcQuery,
+  useGetSewerMutantBakcQuery
 } = etherscanApi;

@@ -5,7 +5,7 @@ const SearchMain = ({setSearchTerm}) => {
   return (
     <div className="search-ape">
         <Input
-          placeholder="Search Ape ID"
+          placeholder="Search ID"
           onChange={(e) => setSearchTerm(e.target.value)}
         ></Input>
       </div>
