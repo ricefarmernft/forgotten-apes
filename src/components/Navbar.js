@@ -16,7 +16,11 @@ const Navbar = () => {
     },
     {
       key: 7,
-      label: <Link to="/unclaimed-sewer">Unclaimed Sewer Pass</Link>,
+      label: <Link to="/unclaimed-sewer">Unclaimed Sewer</Link>,
+    },
+    {
+      key: 8,
+      label: <Link to="/bakc-unclaimed-sewer">Unclaimed Sewer (BAKC)</Link>,
     },
     {
       key: 2,

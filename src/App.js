@@ -21,6 +21,7 @@ import {
   Home,
   LostApes,
   UnclaimedSewer,
+  BakcSewer,
   UnclaimedApe,
   UnclaimedDog,
   UnclaimedOtherside,
@@ -286,6 +287,11 @@ function App() {
                 exact
                 path="/unclaimed-sewer"
                 element={<UnclaimedSewer />}
+              ></Route>
+              <Route
+                exact
+                path="/bakc-unclaimed-sewer"
+                element={<BakcSewer />}
               ></Route>
               <Route exact path="/lost-apes" element={<LostApes />}></Route>
               <Route

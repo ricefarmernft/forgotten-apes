@@ -8,7 +8,7 @@ const TitleMain = (props) => {
   return (
     <div className="title-container">
       <Title className="total-title" level={3}>
-        Total Apes: {number}
+        Total: {number}
       </Title>
       <Text className="title-text" level={3}>
         {children}

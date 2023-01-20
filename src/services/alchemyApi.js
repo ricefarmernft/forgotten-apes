@@ -6,6 +6,8 @@ const baycAddress = "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d";
 // const burnAddress = "0x000000000000000000000000000000000000dead";
 // const burnAddress1 = "0x0000000000000000000000000000000000000000";
 
+const bakcAddress = "0xba30e5f9bb24caa003e9f2f0497ad287fdf95623";
+
 const createRequest = (url) => ({ url });
 
 export const alchemyApi = createApi({
@@ -42,7 +44,20 @@ export const alchemyApi = createApi({
           `getNFTMetadata?contractAddress=${baycAddress}&tokenId=${tokenId}&tokenType=ERC721&refreshCache=false`
         ),
     }),
+    getBakc: builder.query({
+      query: (tokenId) =>
+        createRequest(
+          `getNFTMetadata?contractAddress=${bakcAddress}&tokenId=${tokenId}&refreshCache=false`
+        ),
+    }),
   }),
 });
 
-export const { useGetNftsQuery, useGetCurrentHoldersQuery, useGetPastHoldersQuery, useGetTokenHoldersQuery, useGetMetadataQuery } = alchemyApi;
+export const {
+  useGetNftsQuery,
+  useGetCurrentHoldersQuery,
+  useGetPastHoldersQuery,
+  useGetTokenHoldersQuery,
+  useGetMetadataQuery,
+  useGetBakcQuery,
+} = alchemyApi;
