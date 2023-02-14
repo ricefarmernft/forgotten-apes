@@ -7,45 +7,59 @@ const HomeStatistics = ({ totalLostApes, totalNoTransfer }) => {
     <div className="home-stats">
       <Row
         gutter={[{ xs: 4, sm: 4, md: 6, lg: 6 }, 6]}
-        justify="space-around"
+        justify="flex-start"
         align="middle"
       >
-        <Col xs={12} sm={8} md={8} lg={8} xl={4}>
+        <Col xs={12} sm={8} md={8} lg={8} xl={6}>
           <Link to="/lost-apes">
             <Card hoverable>
               <Statistic title="Lost Apes" value={totalLostApes} />
             </Card>
           </Link>
         </Col>
-        <Col xs={12} sm={8} md={8} lg={8} xl={4}>
+        <Col xs={12} sm={8} md={8} lg={8} xl={6}>
+          <Link to="/unclaimed-sewer">
+            <Card hoverable>
+              <Statistic title="Unclaimed Sewer" value="1001" />
+            </Card>
+          </Link>
+        </Col>
+        <Col xs={12} sm={8} md={8} lg={8} xl={6}>
+          <Link to="/bakc-unclaimed-sewer">
+            <Card hoverable>
+              <Statistic title="Unclaimed Sewer (BAKC)" value="1781" />
+            </Card>
+          </Link>
+        </Col>
+        <Col xs={12} sm={8} md={8} lg={8} xl={6}>
           <Link to="/unclaimed-ape">
             <Card hoverable>
               <Statistic title="Unclaimed $APE" value="96" />
             </Card>
           </Link>
         </Col>
-        <Col xs={12} sm={8} md={8} lg={8} xl={4}>
+        <Col xs={12} sm={8} md={8} lg={8} xl={6}>
           <Link to="/unclaimed-dog">
             <Card hoverable>
               <Statistic title="Unclaimed Dog" value="398" />
             </Card>
           </Link>
         </Col>
-        <Col xs={12} sm={8} md={8} lg={8} xl={4}>
+        <Col xs={12} sm={8} md={8} lg={8} xl={6}>
           <Link to="/unclaimed-otherside">
             <Card hoverable>
               <Statistic title="Unclaimed Otherside" value="266" />
             </Card>
           </Link>
         </Col>
-        <Col xs={12} sm={8} md={8} lg={8} xl={4}>
+        <Col xs={12} sm={8} md={8} lg={8} xl={6}>
           <Link to="/burned-apes">
             <Card hoverable>
               <Statistic title="Burned Apes" value="2" />
             </Card>
           </Link>
         </Col>
-        <Col xs={12} sm={8} md={8} lg={8} xl={4}>
+        <Col xs={12} sm={8} md={8} lg={8} xl={6}>
           <Link to="/no-transfers">
             <Card hoverable>
               <Statistic title="No Transfers" value={totalNoTransfer} />
