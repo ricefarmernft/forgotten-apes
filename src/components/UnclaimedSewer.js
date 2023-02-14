@@ -62,8 +62,7 @@ const UnclaimedSewer = () => {
       ) : (
         <>
           <TitleMain number={totalApes}>
-            {totalApes} apes have not claimed their Sewer Pass. (Please be
-            patient, there is a lot of data to load!)
+            {totalApes} apes did not claimed their Sewer Pass.
           </TitleMain>
           <SearchMain setSearchTerm={setSearchTerm} />
           <SortMain setUnclaimed={setUnclaimedApes} unclaimed={unclaimedApes} />

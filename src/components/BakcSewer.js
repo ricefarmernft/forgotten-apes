@@ -87,10 +87,6 @@ const BakcSewer = () => {
   // Total unclaimed dogs
   const totalDogs = 10000 - sewerClaimed?.length;
 
-  //   useEffect(() => {
-  //     console.log(unclaimedDogs);
-  //   }, [unclaimedDogs]);
-
   if (dogError || apeError || mutantError) return <ErrorMsg />;
 
   return (
@@ -100,8 +96,7 @@ const BakcSewer = () => {
       ) : (
         <>
           <TitleMain number={totalDogs}>
-            {totalDogs} dogs have not claimed their Sewer Pass. (Please be
-            patient, there is a lot of data to load!)
+            {totalDogs} dogs did not claimed their Sewer Pass.
           </TitleMain>
           <SearchMain setSearchTerm={setSearchTerm} />
           <SortMain setUnclaimed={setUnclaimedDogs} unclaimed={unclaimedDogs} />
