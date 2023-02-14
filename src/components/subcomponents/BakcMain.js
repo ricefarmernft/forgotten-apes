@@ -9,19 +9,19 @@ const BakcMain = (props) => {
   const { unclaimed } = props;
 
   // Get BAKC image src
-  const GetBakcImage = ({ dog }) => {
-    const { data } = useGetBakcQuery(dog);
-    const image = data?.media[0].gateway;
-    return (
-      <>
-        <img
-          style={{ width: "100%" }}
-          //   alt={`Bored Ape Kennel Club ${dog}`}
-          src={image}
-        />
-      </>
-    );
-  };
+  // const GetBakcImage = ({ dog }) => {
+  //   const { data } = useGetBakcQuery(dog);
+  //   const image = data?.media[0].gateway;
+  //   return (
+  //     <>
+  //       <img
+  //         style={{ width: "100%" }}
+  //         //   alt={`Bored Ape Kennel Club ${dog}`}
+  //         src={image}
+  //       />
+  //     </>
+  //   );
+  // };
 
   // Lazy load on sorting function
   useEffect(() => {
@@ -48,12 +48,22 @@ const BakcMain = (props) => {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  <Card hoverable cover={<GetBakcImage dog={dog} />}>
-                    <Card.Meta
-                      style={{ textAlign: "center" }}
-                      title={dog.toString()}
+                   <Card
+                  hoverable
+                  // loading={loading}
+                  cover={
+                    <img
+                      style={{ width: "100%" }}
+                      alt={`Bored Ape Kennel Club ${dog}`}
+                      src={`https://img.x2y2.io/v2/1/0xba30e5f9bb24caa003e9f2f0497ad287fdf95623/${dog}/720/image.jpg`}
                     />
-                  </Card>
+                  }
+                >
+                  <Card.Meta
+                    style={{ textAlign: "center" }}
+                    title={dog.toString()}
+                  />
+                </Card>
                 </a>
                 {/* </Link> */}
               </LazyLoad>
