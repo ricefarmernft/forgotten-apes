@@ -18,8 +18,10 @@ import {
   SortMain,
   Loader,
   ErrorMsg,
-  LostApeWallets
+  LostApeWallets,
 } from "./subcomponents/subcomponents";
+import { setLostApesCount } from "../store/store";
+import { useDispatch, useSelector } from "react-redux";
 import { createAlchemyWeb3 } from "@alch/alchemy-web3";
 
 const web3 = new createAlchemyWeb3(
@@ -44,17 +46,17 @@ const LostApes = () => {
   const [matchingTokensAddresses, setMatchingTokensAddresses] = useState([]);
   const [inactiveAddresses, setInactiveAddresses] = useState([]);
 
-  const [lostApes, setLostApes] = useState();
+  const [lostApes, setLostApes] = useState(undefined);
   const [lostApesTable, setLostApesTable] = useState();
 
   const [searchTerm, setSearchTerm] = useState();
   const [filteredApes, setFilteredApes] = useState();
-  const [totalApes, setTotalApes] = useState();
 
-  const { data: apecoin, error: apecoinError } =
-    useGetApecoinApeQuery();
-  const { data: otherside, error: othersideError } =
-    useGetOthersideApeQuery();
+  const dispatch = useDispatch();
+  const lostApesCount = useSelector((state) => state.lostApesCountSlice);
+
+  const { data: apecoin, error: apecoinError } = useGetApecoinApeQuery();
+  const { data: otherside, error: othersideError } = useGetOthersideApeQuery();
 
   //  Set Claimed apecoin Apes
   useSetClaimed(apecoin, 1, setClaimedApes);
@@ -63,6 +65,7 @@ const LostApes = () => {
 
   //   Set Yuga Otherside claims
   useSetClaimed(otherside, 3, setYugaClaimedOtherside);
+
   //   Filter out Mutant Land, set only Ape Land 0-10,000
   useEffect(() => {
     if (yugaClaimedOtherside) {
@@ -84,6 +87,7 @@ const LostApes = () => {
       setMatchingApes(matchingData);
     }
   }, [unclaimedApes, unclaimedOtherside]);
+  
   // Fetch current Ape holders
   const { data: currentHolders, error: currentError } =
     useGetCurrentHoldersQuery();
@@ -175,23 +179,28 @@ const LostApes = () => {
       finalApes.map(({ token }) => {
         lostApesArray.push(token);
       });
-      setTotalApes(lostApesArray.length);
-      setFilteredApes(lostApesArray);
-      setLostApes(getRandomApes(lostApesArray));
+      // setTotalApes(lostApesArray.length);
+      if (lostApesArray.length > 0) {
+        setFilteredApes(lostApesArray);
+        setLostApes(getRandomApes(lostApesArray));
+      }
+      if (lostApesCount === 0) {
+        dispatch(setLostApesCount(lostApesArray.length));
+      }
     }
   }, [inactiveAddresses]);
 
   // Set loader to false
   useEffect(() => {
-    if (totalApes) {
+    if (lostApes?.length > 0) {
       setLoading(false);
     }
-  }, [totalApes]);
+  }, [lostApes]);
 
   // Filter apes by ID
   useIdFilter(filteredApes, setLostApes, searchTerm, true);
 
-  if (currentError || apecoinError || othersideError ) return <ErrorMsg />
+  if (currentError || apecoinError || othersideError) return <ErrorMsg />;
 
   return (
     <Content>
@@ -199,8 +208,9 @@ const LostApes = () => {
         <Loader />
       ) : (
         <>
-          <TitleMain number={totalApes}>
-            {totalApes} apes are presumed lost. Lost apes satisfy 3 criteria:
+          <TitleMain number={lostApesCount}>
+            {lostApesCount} apes are presumed lost. Lost apes satisfy 3
+            criteria:
             <ul className="lost-apes-list">
               <li>Ape did not claim $APE coin</li>
               <li>Ape did not claim Otherside land</li>

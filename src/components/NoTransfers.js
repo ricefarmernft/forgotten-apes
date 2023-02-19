@@ -15,6 +15,9 @@ import {
 } from "./subcomponents/subcomponents";
 import { createAlchemyWeb3 } from "@alch/alchemy-web3";
 
+import { setNoTransfersCount } from "../store/store";
+import { useDispatch, useSelector } from "react-redux";
+
 const web3 = new createAlchemyWeb3(
   `https://eth-mainnet.g.alchemy.com/v2/${process.env.REACT_APP_ALCHEMY_API_KEY}`
 );
@@ -27,9 +30,10 @@ const NoTransfers = () => {
   const [untransferredApes, setUntransferredApes] = useState();
   const [filteredApes, setFilteredApes] = useState();
   const [searchTerm, setSearchTerm] = useState();
-  const [totalApes, setTotalApes] = useState();
 
+  const dispatch = useDispatch();
   const lastApeBlock = 12347249;
+  const noTransfersCount = useSelector((state) => state.noTransfersCountSlice);
 
   const { data: current, error: currentError } = useGetCurrentHoldersQuery();
   const { data: past, error: pastError } = useGetPastHoldersQuery(lastApeBlock);
@@ -61,8 +65,10 @@ const NoTransfers = () => {
         web3.utils.hexToNumber(array.substring(42))
       );
       setFilteredApes(apeNumbers);
-      setTotalApes(apeNumbers.length);
       setUntransferredApes(getRandomApes(apeNumbers));
+      if (noTransfersCount === 0) {
+        dispatch(setNoTransfersCount(apeNumbers.length));
+      }
     }
   }, [current, past]);
 
@@ -76,7 +82,7 @@ const NoTransfers = () => {
   // Filter apes by ID
   useIdFilter(filteredApes, setUntransferredApes, searchTerm, true);
 
-  if (currentError || pastError) return <ErrorMsg />
+  if (currentError || pastError) return <ErrorMsg />;
 
   return (
     <Content>
@@ -84,8 +90,8 @@ const NoTransfers = () => {
         <Loader />
       ) : (
         <>
-          <TitleMain number={totalApes}>
-            {totalApes} apes are in the same wallet that minted them.
+          <TitleMain number={noTransfersCount}>
+            {noTransfersCount} apes are in the same wallet that minted them.
           </TitleMain>
           <SearchMain setSearchTerm={setSearchTerm} />
 
