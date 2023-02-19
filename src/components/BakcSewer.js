@@ -42,9 +42,13 @@ const BakcSewer = () => {
   //   Set claimed BAKC sewer pass function
   function useSetBakcClaimed(data, setDog) {
     useEffect(() => {
-      const findHex = data?.result?.map((entry) => entry.data);
-      const number = findHex?.map((hex) => web3.utils.hexToNumber(hex));
-      setDog(number);
+      if (data) {
+        const findHex = data?.result?.map((entry) => entry.data);
+        const number = findHex?.map((hex) => web3.utils.hexToNumber(hex));
+        setDog(number);
+      } else {
+        return;
+      }
     }, [data]);
   }
 
@@ -67,12 +71,14 @@ const BakcSewer = () => {
       });
       setUnclaimedDogs(getRandomApes(unclaimedBakc));
       setLoading(false);
+    } else {
+      return;
     }
-  }, [sewerClaimed]);
+  }, [sewerClaimed, allDogs]);
 
   // Filter dogs by ID
   useEffect(() => {
-    if (sewerClaimed) {
+    if (sewerClaimed?.length > 0) {
       const differences = allDogs.filter(
         (dogs) => !sewerClaimed?.includes(dogs)
       );
