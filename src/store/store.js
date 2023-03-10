@@ -20,7 +20,6 @@ const darkSlice = createSlice({
 });
 const darkSelector = (state) => state.darkSlice.dark;
 
-
 const lostApesCountSlice = createSlice({
   name: "lostApesCount",
   initialState: 0,
@@ -40,7 +39,6 @@ const noTransfersCountSlice = createSlice({
     },
   },
 });
-
 
 const store = configureStore({
   reducer: {
