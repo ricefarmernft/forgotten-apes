@@ -56,14 +56,14 @@ const Home = (props) => {
 
   const [lostApes, setLostApes] = useState();
 
-  // Find No Transfers Count
   const { data: current, error: currentsError } = useGetCurrentHoldersQuery();
   const { data: past, error: pastError } = useGetPastHoldersQuery(lastApeBlock);
 
   const lostApesCount = useSelector((state) => state.lostApesCountSlice);
-  const noTransfersCount = useSelector((state) => state.noTransfersCountSlice)
+  const noTransfersCount = useSelector((state) => state.noTransfersCountSlice);
   const dispatch = useDispatch();
 
+  // Find No Transfers Count
   useEffect(() => {
     if (current && past) {
       // Find all ape wallets at the end of the BAYC mint
@@ -255,7 +255,7 @@ const Home = (props) => {
   return (
     <Content>
       {loading ? (
-        <Loader>This could take up to 1 minute...</Loader>
+        <Loader></Loader>
       ) : (
         <>
           <HomeStatistics

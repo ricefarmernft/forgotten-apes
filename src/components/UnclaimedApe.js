@@ -38,7 +38,7 @@ const UnclaimedApe = () => {
   // Filter apes by ID
   useIdFilter(claimedApes, setUnclaimedApes, searchTerm);
 
-  if (error) return <ErrorMsg />
+  if (error) return <ErrorMsg />;
 
   return (
     <Content>

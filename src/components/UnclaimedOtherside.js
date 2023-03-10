@@ -44,7 +44,7 @@ const UnclaimedOtherside = () => {
   //   Filter apes by Id
   useIdFilter(yugaClaimedOtherside, setUnclaimedOtherside, searchTerm, true);
 
-  if (error) return <ErrorMsg />
+  if (error) return <ErrorMsg />;
 
   return (
     <Content>

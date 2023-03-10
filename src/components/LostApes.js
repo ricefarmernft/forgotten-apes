@@ -23,6 +23,11 @@ import {
 import { setLostApesCount } from "../store/store";
 import { useDispatch, useSelector } from "react-redux";
 import { createAlchemyWeb3 } from "@alch/alchemy-web3";
+import {
+  unclaimedSewerApes,
+  unclaimedOthersideApes,
+  unclaimedApecoinApes,
+} from "./data/lostApesData";
 
 const web3 = new createAlchemyWeb3(
   `https://eth-mainnet.g.alchemy.com/v2/${process.env.REACT_APP_ALCHEMY_API_KEY}`
@@ -33,12 +38,6 @@ const lastOthersideBlock = 14680891;
 
 const LostApes = () => {
   const [loading, setLoading] = useState(true);
-
-  const [claimedApes, setClaimedApes] = useState();
-  const [unclaimedApes, setUnclaimedApes] = useState();
-
-  const [yugaClaimedOtherside, setYugaClaimedOtherside] = useState();
-  const [unclaimedOtherside, setUnclaimedOtherside] = useState();
 
   const [matchingApes, setMatchingApes] = useState();
 
@@ -55,44 +54,23 @@ const LostApes = () => {
   const dispatch = useDispatch();
   const lostApesCount = useSelector((state) => state.lostApesCountSlice);
 
-  const { data: apecoin, error: apecoinError } = useGetApecoinApeQuery();
-  const { data: otherside, error: othersideError } = useGetOthersideApeQuery();
-
-  //  Set Claimed apecoin Apes
-  useSetClaimed(apecoin, 1, setClaimedApes);
-  // Set Unclaimed apecoin Apes
-  useSetUnclaimed(claimedApes, setUnclaimedApes);
-
-  //   Set Yuga Otherside claims
-  useSetClaimed(otherside, 3, setYugaClaimedOtherside);
-
-  //   Filter out Mutant Land, set only Ape Land 0-10,000
+  //   Filter apes with unclaimed $ape, unclaimed otherside, and unclaimed sewer
   useEffect(() => {
-    if (yugaClaimedOtherside) {
-      const unclaimedOthersideApes = yugaClaimedOtherside?.filter(
-        (ape) => ape < 10000
+    if (unclaimedApecoinApes && unclaimedOthersideApes && unclaimedSewerApes) {
+      const commonApes = getCommonApes(
+        unclaimedApecoinApes,
+        unclaimedOthersideApes,
+        unclaimedSewerApes
       );
-      setUnclaimedOtherside(unclaimedOthersideApes);
+      setMatchingApes(commonApes);
     }
-  }, [yugaClaimedOtherside]);
+  }, []);
 
-  //   Filter apes with unclaimed $ape and unclaimed otherside
-  useEffect(() => {
-    if (unclaimedApes && unclaimedOtherside) {
-      let matchingData = unclaimedApes.filter((element) =>
-        unclaimedOtherside.includes(element)
-      );
-      // Sort matching apes low to high
-      matchingData?.sort((a, b) => a - b);
-      setMatchingApes(matchingData);
-    }
-  }, [unclaimedApes, unclaimedOtherside]);
-  
   // Fetch current Ape holders
   const { data: currentHolders, error: currentError } =
     useGetCurrentHoldersQuery();
 
-  //
+  // Find Owner Addresses
   useEffect(() => {
     const tokenHex = [];
     const hexBegin =
@@ -133,6 +111,7 @@ const LostApes = () => {
     setMatchingAddresses(uniqueHexAddress);
   }, [matchingApes]);
 
+  // Find inactive wallet addresses
   useEffect(() => {
     if (matchingAddresses) {
       const inactiveAddressArr = [];
@@ -145,16 +124,22 @@ const LostApes = () => {
           .then();
         // Get transaction count for wallet addresses between lastOthersideBlock and most recent Block
         async function getTransactionCount() {
-          const allTxs = await allTx;
-          const beforeTxs = await beforeTx;
-          // If there are no recent transactions, add it to the inactiveAddressArr array
-          if (allTxs - beforeTxs === 0) {
-            inactiveAddressArr.push(address);
+          try {
+            const allTxs = await allTx;
+            const beforeTxs = await beforeTx;
+            // If there are no recent transactions, add it to the inactiveAddressArr array
+            if (allTxs - beforeTxs === 0) {
+              inactiveAddressArr.push(address);
+            }
+          } catch (error) {
+            console.log("Error Finding Transaction Count");
+            // setPromiseError(true)
           }
         }
 
         return getTransactionCount();
       });
+
       //   Set inactiveAddresses once all promises have returned
       Promise.all(promises).then(() => {
         setInactiveAddresses(inactiveAddressArr);
@@ -162,6 +147,7 @@ const LostApes = () => {
     }
   }, [matchingAddresses]);
 
+  // Set Lost Apes
   useEffect(() => {
     // Filter out active addresses
     if (inactiveAddresses) {
@@ -192,6 +178,7 @@ const LostApes = () => {
 
   // Set loader to false
   useEffect(() => {
+    console.log(lostApes);
     if (lostApes?.length > 0) {
       setLoading(false);
     }
@@ -200,7 +187,29 @@ const LostApes = () => {
   // Filter apes by ID
   useIdFilter(filteredApes, setLostApes, searchTerm, true);
 
-  if (currentError || apecoinError || othersideError) return <ErrorMsg />;
+  // Find apes that have unclaimed $APE, Otherside, and Sewer (Function)
+  const getCommonApes = (arr1, arr2, arr3) => {
+    // Sort the arrays in ascending order
+    arr1.sort((a, b) => a - b);
+    arr2.sort((a, b) => a - b);
+    arr3.sort((a, b) => a - b);
+
+    const commonApes = [];
+
+    // Iterate through each number in the first array
+    for (let i = 0; i < arr1.length; i++) {
+      const num = arr1[i];
+
+      // Check if the number is present in both the second and third arrays
+      if (arr2.includes(num) && arr3.includes(num)) {
+        // Add the number to the array of common numbers
+        commonApes.push(num);
+      }
+    }
+    return commonApes;
+  };
+
+  if (currentError) return <ErrorMsg />;
 
   return (
     <Content>
@@ -209,11 +218,12 @@ const LostApes = () => {
       ) : (
         <>
           <TitleMain number={lostApesCount}>
-            {lostApesCount} apes are presumed lost. Lost apes satisfy 3
+            {lostApesCount} apes are presumed lost. Lost apes satisfy 4
             criteria:
             <ul className="lost-apes-list">
               <li>Ape did not claim $APE coin</li>
               <li>Ape did not claim Otherside land</li>
+              <li>Ape did not claim Sewer Pass</li>
               <li>
                 Ethereum Address containing the Ape has had no activity since
                 the Otherside mint
