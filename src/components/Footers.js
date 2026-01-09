@@ -25,7 +25,7 @@ const Footers = () => {
         </div>
       </div>
       <div className="footer-text">
-        <div>Rice Labs ©2023</div>
+        <div>Rice Labs © {new Date().getFullYear()}</div>
         <div>All Rights Reserved</div>
       </div>
       <div className="footer-logos">
@@ -36,11 +36,7 @@ const Footers = () => {
         >
           <GithubOutlined />
         </a>
-        <a
-          href="https://twitter.com/RiceFarmerNFT"
-          target="_blank"
-          rel="noreferrer"
-        >
+        <a href="https://x.com/RiceFarmerNFT" target="_blank" rel="noreferrer">
           <TwitterOutlined />
         </a>
       </div>
