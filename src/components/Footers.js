@@ -36,7 +36,7 @@ const Footers = () => {
         >
           <GithubOutlined />
         </a>
-        <a href="https://x.com/RiceFarmerNFT" target="_blank" rel="noreferrer">
+        <a href="https://x.com/RiceFarmer0x" target="_blank" rel="noreferrer">
           <TwitterOutlined />
         </a>
       </div>
